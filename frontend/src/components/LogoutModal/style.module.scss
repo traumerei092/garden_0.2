@@ -1,0 +1,45 @@
+.modalBase {
+  --modal-background: rgb(0, 0, 0) !important;
+  --modal-color: rgb(255, 255, 255) !important;
+
+  @media (min-width: 768px) {
+    --modal-width: 60% !important;
+    --modal-height: 100% !important;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modalBase {
+  background-color: rgb(7, 14, 54);
+  padding: 20px 0;
+}
+
+.modalBodyContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 1rem;
+}
+
+.modalTitle {
+  text-align: center;
+}
+
+.modalFooterContent {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.modalButton {
+  min-width: 120px;
+}
+
+.modalCloseButton {
+  color: white;
+}

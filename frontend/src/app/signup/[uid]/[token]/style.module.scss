@@ -1,0 +1,36 @@
+.button {
+  background: linear-gradient(to right, #00c6ff, #eb0ef2);
+  color: rgb(255, 255, 255) !important;
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 0 40px;
+  margin: 30px 0 20px 0;
+
+  &:hover {
+    color: rgb(255, 255, 255) !important; // ホバー時の色も設定
+  }
+
+  // NextUIのボタンテキストに直接スタイルを適用
+  span {
+    color: rgb(255, 255, 255) !important;
+  }
+}
+
+.guidance {
+  color: rgb(255, 255, 255);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+
+  h2 {
+    font-size: 20px;
+    margin: 20px 0;
+  }
+
+  h2, p {
+    color: rgb(255, 255, 255);
+  }
+}

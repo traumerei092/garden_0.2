@@ -1,0 +1,51 @@
+.openingHoursCard {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+}
+
+.openingHoursTitle {
+  color: white;
+  margin-bottom: 15px;
+  font-size: 1.0rem;
+}
+
+.dayRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.dayCheckbox {
+  min-width: 80px;
+}
+
+.dayLabel {
+  color: white;
+}
+
+.timeInput {
+  flex: 1;
+  max-width: 120px;
+}
+
+.timeSeparator {
+  color: white;
+  margin: 0 5px;
+}
+
+.inputWrapper {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+.inputInner {
+  color: white !important;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}

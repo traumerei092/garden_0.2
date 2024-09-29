@@ -1,0 +1,120 @@
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 150px;
+}
+
+.message {
+  color: rgba( 255, 255, 255, 1);
+  margin: -10px 0 0 0;
+}
+
+.logo {
+  width: 60%  !important;
+  margin: -10px 0 10px 0;
+}
+
+.condition {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin: -10px 0 15px 0;
+}
+
+.button {
+  background-color: transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-bottom: 2px solid transparent !important;
+  transition: all 0.3s ease;
+  flex: 1;
+
+  &:hover {
+    color: rgba(255, 255, 255, 1) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+.active {
+  color: rgba(255, 255, 255, 1) !important;
+  border-bottom-color: rgba(255, 255, 255, 1) !important;
+}
+
+// キーワードで探すボタンのスタイル
+.button:nth-child(2) {
+  color: #00c6ff !important;
+
+  &.active {
+    border-bottom-color: #00c6ff !important;
+  }
+
+  &:hover {
+    color: #4dd5ff !important;
+    border-bottom-color: #4dd5ff !important;
+  }
+}
+
+.input {
+  margin: 15px 0 0 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+}
+
+.inputText {
+  width: 85%;
+}
+
+.inputBase {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.inputMainWrapper {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.inputWrapper {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.inputInner {
+  background-color: transparent !important;
+  color: white !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+.inputButton {
+  width: 15%;
+  border-bottom-right-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  min-width: auto !important;
+  padding: 0 !important;
+}
+
+.outerLocation {
+  margin: 25px 0 0 0;
+  background: linear-gradient(to right, #00c6ff, #eb0ef2) !important;
+  padding: 1px;
+  border-radius: 5px;
+}
+
+.innerLocation {
+  background: rgba(7, 14, 54, 1);
+  border-radius: 5px;
+}

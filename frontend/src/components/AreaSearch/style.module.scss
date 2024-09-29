@@ -1,0 +1,73 @@
+.layout {
+  width: 100%;
+  height: 100%;
+  padding: 3% 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.areaAccordion {
+  width: 100%;
+  --nextui-accordion-border-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 2% 2%;
+  border-radius: 5px;
+}
+
+.areaItem,
+.prefectureItem {
+  background-color: transparent !important;
+  border-color: white !important;
+}
+
+.areaItem,
+.prefectureItem {
+  :global(.nextui-accordion-trigger) {
+    color: white !important;
+  }
+
+  :global(.nextui-accordion-title) {
+    color: white !important;
+  }
+
+  :global(.nextui-accordion-icon) {
+    color: white !important;
+  }
+
+  :global(.nextui-accordion-content) {
+    color: white !important;
+  }
+}
+
+.prefectureAccordion {
+  margin-left: 20px;
+}
+
+.radioGroup {
+  color: white;
+}
+
+.radio {
+  color: white;
+
+  :global(.nextui-radio-text) {
+    color: white;
+  }
+
+  :global(.nextui-radio-point::after) {
+    background-color: white;
+  }
+
+  :global(.nextui-radio-point) {
+    border-color: white;
+  }
+}
+
+// グローバルスタイルのオーバーライド
+.areaAccordion {
+  :global(.nextui-radio-group-items) {
+    gap: 10px;
+  }
+}

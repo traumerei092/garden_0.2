@@ -1,0 +1,78 @@
+.layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.shopImageFrame {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  margin: 150px 0 0 0;
+}
+
+.shopImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: unset;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
+}
+
+.featureContainer {
+  width: 100%;
+  padding: 20px;
+}
+
+.featureSection {
+  margin-bottom: 20px;
+}
+
+.featureTitle {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-radius: 5px;
+  background-color: rgba( 255, 255, 255, 0.1);
+  padding: 3% 3%;
+}
+
+.typeChip {
+  background: rgba(235, 14, 242, 0.4);
+  border: 0.5px solid rgba(235, 14, 242, 1);
+  color: white;
+  height: 1.5rem;
+}
+
+.conceptChip {
+  background: rgba(0, 198, 255, 0.4);
+  border: 0.5px solid rgba(0, 198, 255, 1);
+  color: white;
+  height: 1.5rem;
+}
+
+.layoutChip {
+  background: rgba(255, 174, 0, 0.4);
+  border: 0.5px solid rgba(255, 174, 0, 1);
+  color: white;
+  height: 1.5rem;
+}

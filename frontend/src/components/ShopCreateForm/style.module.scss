@@ -1,0 +1,81 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  color: white;
+}
+
+.button {
+  width: 85%;
+  border-radius: 5px;
+  background: linear-gradient(to right, #00c6ff, #eb0ef2) !important;
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0 50px 0;
+}
+
+.inputs {
+  width: 85% !important;
+  margin: 20px 0;
+}
+
+.inputWrapper {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+.inputInner {
+  background-color: transparent !important;
+  color: white !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+}
+
+.inputs label {
+  color: white !important;  // ラベルの色を白に設定
+}
+
+.coordinates {
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 20px 0;
+}
+
+.coordinate {
+  width: 45%;
+}
+
+.coordinate label {
+  color: white !important;  // ラベルの色を白に設定
+}
+
+.select {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+}
+
+.selectTrigger {
+  background-color: transparent;
+  min-height: 40px;
+}
+
+.selectValue {
+  padding: 0 8px;
+}

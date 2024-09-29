@@ -1,0 +1,39 @@
+.selectWrapper {
+  width: 85%;
+  margin-bottom: 20px;
+}
+
+.selectLabel {
+  color: white;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.select {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+}
+
+.selectTrigger {
+  background-color: transparent;
+  min-height: 40px;
+}
+
+.selectValue {
+  padding: 0 8px;
+}
+
+.selectedTags {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 4px 0;
+  gap: 4px;
+}
+
+.chip {
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1.5px solid #00c6ff;
+}

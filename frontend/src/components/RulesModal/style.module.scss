@@ -1,0 +1,9 @@
+.modalBase {
+  --modal-background: rgb(0, 0, 0) !important;
+  --modal-color: rgb(255, 255, 255) !important;
+
+  @media (min-width: 768px) {
+    --modal-width: 60% !important;
+    --modal-height: 70% !important;
+  }
+}

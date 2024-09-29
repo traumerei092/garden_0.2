@@ -1,0 +1,81 @@
+.header {
+    background-color: rgb(7, 14, 54);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    position: fixed;
+    width: 390px;
+    background-color: rgb(7, 14, 54);
+    z-index: 999;
+}
+
+.headerLeft {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.headerLeft Link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerRight {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 5px;
+    height: 100%;
+    background-color: rgba(7, 14, 54, 1);
+}
+
+.navbar {
+  min-height: 60px;
+  background-color: rgba(7, 14, 54, 1) !important;
+}
+
+.navbarMenu {
+  margin-top: 2.3rem;
+  padding: 1.25rem;
+  background-color: rgba(7, 14, 54, 0.1) !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbarMenuItemWrapper {
+  display: flex;
+  justify-content: flex-end;
+  z-index: 500;
+}
+
+.navbarMenuItem {
+  width: 100%;
+  padding: 0.2rem 0;
+  color: white;
+  text-align: right;
+  background: none;
+  border: none;
+  font-size: inherit;
+  cursor: pointer;
+  &:hover {
+    color: #cbd5e0;
+  }
+  &.active {
+    color: #63b3ed;
+  }
+  &.danger {
+    color: #eb0ef2;
+  }
+}
+
+.navbarMenuToggle {
+  color: white;
+}

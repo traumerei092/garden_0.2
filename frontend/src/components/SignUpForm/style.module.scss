@@ -1,0 +1,68 @@
+.title {
+  width: 75%;
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.signupForm {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check {
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+}
+
+.button {
+  background: linear-gradient(to right, #00c6ff, #eb0ef2);
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 0 40px;
+  margin: 30px 0 20px 0;
+}
+
+.signupInput {
+  width: 80%;
+  margin-bottom: 30px;
+  color: rgb(255, 255, 255);
+}
+
+.customInputWrapper {
+  &::after {
+    background: rgba(255, 255, 255, 0.5) !important; // デフォルトのアンダーライン色
+  }
+
+  &:hover::after {
+    background: rgba(0, 255, 255, 1) !important; // ホバー時のアンダーライン色
+  }
+}
+
+.customLabel {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.customInput {
+  color: rgb(255, 255, 255) !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.2) !important;
+  }
+}
+
+.link {
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+  font-weight: initial;
+}

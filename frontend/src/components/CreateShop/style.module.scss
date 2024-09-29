@@ -1,0 +1,21 @@
+.createButton {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1000;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.circlePlus {
+  width: 60px;
+  height: 60px;
+  stroke: url(#gradientColors);
+  stroke-width: 1;
+  fill: none;
+
+  :global(path) {
+    stroke: white;
+  }
+}

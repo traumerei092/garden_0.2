@@ -1,0 +1,73 @@
+.navBar {
+  background-color: rgba(7, 14, 54, 1) !important;
+  height: 50px;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  margin: 0 auto;
+}
+
+.end {
+  width: 25%;
+  display: flex;
+}
+
+.start {
+  width: 25%;
+  text-align: center;
+  font-size: 12px;
+}
+
+.center {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.outerButton {
+  background: rgba(7, 14, 54, 1) !important !important;
+  border: 1px solid #00c6ff;
+  padding: 1px;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.innerButton {
+  background: rgba(0, 198, 255, 0.15);
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  width: 100%;
+}
+
+.mapPinnedIcon {
+  width: 30px;
+  height: 30px;
+  stroke: url(#gradientColors);
+  stroke-width: 1;
+  fill: none;
+
+  :global(path) {
+    stroke: white;
+  }
+}
+
+.filterWrapper {
+  background-color: rgba(7, 14, 54, 1) !important;
+}
+
+.listFilter {
+  width: 25px;
+  height: 25px;
+  stroke: url(#gradientColors);
+  stroke-width: 1;
+  fill: none;
+
+  :global(path) {
+    stroke: white;
+  }
+}

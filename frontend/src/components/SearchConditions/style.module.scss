@@ -1,0 +1,141 @@
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 150px;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.conditionArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: -50px 0 10px 0;
+}
+
+.condition, .area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 45%;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 8px 12px;
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.condition {
+  margin-right: 5%;
+}
+
+.area {
+  margin-left: 5%;
+}
+
+.title {
+  color: #00c6ff;
+  font-weight: bold;
+}
+
+.explanation {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.button {
+  background: rgba( 255, 255, 255, 0)!important;
+  min-width: auto !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.circlePlus {
+  color: #00c6ff;
+  width: 20px;
+  height: 20px;
+}
+
+.keyword {
+  width: 100%;
+}
+
+.keywordArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 0 1.25%;
+}
+
+.keywordTitle {
+  width: 25%;
+  font-size: 14px;
+  color: #00c6ff;
+  font-weight: bold;
+}
+
+.keywordContent {
+  width: 70%;
+  font-size: 14px;
+}
+
+.transparentInput {
+  background: transparent !important;
+  color: white !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+.transparentInputWrapper {
+  background: transparent !important;
+
+  &:hover, &:focus {
+    background: transparent !important;
+  }
+}
+
+.searchButtonArea {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.searchButton {
+  width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(to right, #00c6ff, #eb0ef2) !important;
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.selectedArea {
+  width: 100%;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 2%;
+}
+
+.areaChip {
+  background-color: transparent !important;
+  color: white;
+}
+
+.selectedConditions {
+  width: 100%;
+}
