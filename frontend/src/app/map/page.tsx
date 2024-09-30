@@ -10,8 +10,8 @@ const MapPage: React.FC = () => {
 
     useEffect(() => {
         if (searchParams) {
-            const lat = parseFloat(searchParams.get('lat') || '33.5902');
-            const lng = parseFloat(searchParams.get('lng') || '130.4017');
+            const lat = parseFloat(searchParams.get('lat') ?? '33.5902');
+            const lng = parseFloat(searchParams.get('lng') ?? '130.4017');
 
             const loader = new Loader({
                 apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
