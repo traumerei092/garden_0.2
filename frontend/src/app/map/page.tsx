@@ -45,6 +45,16 @@ const MapPage: React.FC = () => {
                 apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
                 version: 'weekly',
             });
+
+            loader.load().then(() => {
+                const mapElement = document.getElementById("map") as HTMLElement;
+                const newMap = new google.maps.Map(mapElement, {
+                    center: { lat, lng },
+                    zoom: 14,
+                });
+
+                setMap(newMap);
+            });
         }
     }, [searchParams]);
 
