@@ -69,7 +69,7 @@ const AreaSearch: React.FC<AreaSearchProps> = ({
                                         </RadioGroup>
                                         {selectedPrefecture === prefecture && (
                                             <RadioGroup value={selectedCity} onValueChange={handleCitySelect} className={styles.radioGroup}>
-                                                {cities.map(city => (
+                                                {Array.isArray(cities) && cities.map((city: string) => (
                                                     <Radio key={city} value={city} className={styles.radio}>{city}</Radio>
                                                 ))}
                                             </RadioGroup>
