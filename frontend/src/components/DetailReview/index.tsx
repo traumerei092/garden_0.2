@@ -53,10 +53,10 @@ const DetailReview: React.FC<DetailReviewProps> = ({ shopId }) => {
                         <div className={styles.reviewHeaderLeft}>
                             <Avatar
                                 src={review.user.avatar || "/default-avatar.png"}
-                                name={review.user}
+                                name={review.user.name}
                                 className={styles.avatar}
                             />
-                            <span className={styles.userName}>{review.user}</span>
+                            <span className={styles.userName}>{review.user.name}</span>
                         </div>
                         <div className={styles.reviewHeaderRight}>
                             <Heart className={styles.likeIcon} />
