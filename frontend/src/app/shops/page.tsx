@@ -29,56 +29,58 @@ export default function Shops() {
     useEffect(() => {
         const fetchShopsAndLocation = async () => {
             try {
-                const keyword = searchParams.get('keyword');
-                const types = searchParams.get('types')?.split(',') || [];
-                const concepts = searchParams.get('concepts')?.split(',') || [];
-                const layouts = searchParams.get('layouts')?.split(',') || [];
-                const region = searchParams.get('region');
-                const prefecture = searchParams.get('prefecture');
-                const city = searchParams.get('city');
-                const [fetchedShops, location] = await Promise.all([
-                    getShops(keyword, types, concepts, layouts, region, prefecture, city),
-                    getUserLocation().catch(error => {
-                        console.error("Error getting user location:", error);
-                        return null;
-                    })
-                ]);
+                if (searchParams) {
+                    const keyword = searchParams.get('keyword') ?? ''; // デフォルト値として空文字列を使用
+                    const types = searchParams.get('types')?.split(',') || [];
+                    const concepts = searchParams.get('concepts')?.split(',') || [];
+                    const layouts = searchParams.get('layouts')?.split(',') || [];
+                    const region = searchParams.get('region') ?? '';
+                    const prefecture = searchParams.get('prefecture') ?? '';
+                    const city = searchParams.get('city') ?? '';
 
-                console.log("User location:", location);
+                    const [fetchedShops, location] = await Promise.all([
+                        getShops(keyword, types, concepts, layouts, region, prefecture, city),
+                        getUserLocation().catch(error => {
+                            console.error("Error getting user location:", error);
+                            return null;
+                        })
+                    ]);
 
-                setUserLocation(location);
+                    console.log("User location:", location);
+                    setUserLocation(location);
 
-                const shopsWithCoordinates = await Promise.all(fetchedShops.map(async (shop) => {
-                    if (!shop.latitude || !shop.longitude) {
-                        const fullAddress = `${shop.address.prefecture}${shop.address.city}${shop.address.town}${shop.address.street_address}`;
-                        const coordinates = await getCoordinatesFromAddress(fullAddress);
-                        if (coordinates) {
-                            return { ...shop, latitude: coordinates.lat, longitude: coordinates.lng };
+                    const shopsWithCoordinates = await Promise.all(fetchedShops.map(async (shop) => {
+                        if (!shop.latitude || !shop.longitude) {
+                            const fullAddress = `${shop.address.prefecture}${shop.address.city}${shop.address.town}${shop.address.street_address}`;
+                            const coordinates = await getCoordinatesFromAddress(fullAddress);
+                            if (coordinates) {
+                                return { ...shop, latitude: coordinates.lat, longitude: coordinates.lng };
+                            }
                         }
-                    }
-                    return shop;
-                }));
-
-                if (location) {
-                    const shopsWithDistance = shopsWithCoordinates.map(shop => ({
-                        ...shop,
-                        distance: shop.latitude && shop.longitude
-                            ? calculateDistance(
-                                location.latitude,
-                                location.longitude,
-                                shop.latitude,
-                                shop.longitude
-                            )
-                            : undefined
+                        return shop;
                     }));
-                    console.log("Shops with distance:", shopsWithDistance);
-                    shopsWithDistance.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
-                    setShops(shopsWithDistance);
-                } else {
-                    setShops(fetchedShops);
-                }
 
-                setLoading(false);
+                    if (location) {
+                        const shopsWithDistance = shopsWithCoordinates.map(shop => ({
+                            ...shop,
+                            distance: shop.latitude && shop.longitude
+                                ? calculateDistance(
+                                    location.latitude,
+                                    location.longitude,
+                                    shop.latitude,
+                                    shop.longitude
+                                )
+                                : undefined
+                        }));
+                        console.log("Shops with distance:", shopsWithDistance);
+                        shopsWithDistance.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
+                        setShops(shopsWithDistance);
+                    } else {
+                        setShops(fetchedShops);
+                    }
+
+                    setLoading(false);
+                }
             } catch (err) {
                 setError('Failed to fetch shops');
                 setLoading(false);
