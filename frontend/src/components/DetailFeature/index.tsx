@@ -48,7 +48,7 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                     <h3 className={styles.featureTitle}>タイプ</h3>
                     <div className={styles.chipContainer}>
                         {shop.types && shop.types.map((typeId) => (
-                            <Chip key={typeId} className={styles.typeChip}>
+                            <Chip key={typeId.toString()} className={styles.typeChip}>
                                 {getTypeName(typeId)}
                             </Chip>
                         ))}
@@ -58,7 +58,7 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                     <h3 className={styles.featureTitle}>コンセプト</h3>
                     <div className={styles.chipContainer}>
                         {shop.concepts && shop.concepts.map((conceptId) => (
-                            <Chip key={conceptId} className={styles.conceptChip}>
+                            <Chip key={conceptId.toString()} className={styles.conceptChip}>
                                 {getConceptName(conceptId)}
                             </Chip>
                         ))}
@@ -68,7 +68,7 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                     <h3 className={styles.featureTitle}>レイアウト</h3>
                     <div className={styles.chipContainer}>
                         {shop.layouts && shop.layouts.map((layoutId) => (
-                            <Chip key={layoutId} className={styles.layoutChip}>
+                            <Chip key={layoutId.toString()} className={styles.layoutChip}>
                                 {getLayoutName(layoutId)}
                             </Chip>
                         ))}
