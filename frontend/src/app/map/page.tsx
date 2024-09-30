@@ -9,32 +9,43 @@ const MapPage: React.FC = () => {
     const [map, setMap] = useState<google.maps.Map | null>(null);
 
     useEffect(() => {
-        const lat = parseFloat(searchParams.get('lat') || '33.5902');
-        const lng = parseFloat(searchParams.get('lng') || '130.4017');
+        if (searchParams) {
+            const lat = parseFloat(searchParams.get('lat') || '33.5902');
+            const lng = parseFloat(searchParams.get('lng') || '130.4017');
 
-        const loader = new Loader({
-            apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-            version: "weekly",
-        });
-
-        loader.load().then(() => {
-            const mapElement = document.getElementById("map") as HTMLElement;
-            const newMap = new google.maps.Map(mapElement, {
-                center: { lat, lng },
-                zoom: 14,
+            const loader = new Loader({
+                apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+                version: "weekly",
             });
 
-            setMap(newMap);
+            loader.load().then(() => {
+                const mapElement = document.getElementById("map") as HTMLElement;
+                const newMap = new google.maps.Map(mapElement, {
+                    center: {lat, lng},
+                    zoom: 14,
+                });
 
-            // ユーザーの位置にマーカーを追加
-            new google.maps.Marker({
-                position: { lat, lng },
-                map: newMap,
-                title: "Your Location"
+                setMap(newMap);
+
+                // ユーザーの位置にマーカーを追加
+                new google.maps.Marker({
+                    position: {lat, lng},
+                    map: newMap,
+                    title: "Your Location"
+                });
+
+                // ここで周辺のショップを取得し、マーカーを追加するロジックを実装できます
             });
+        } else {
+            // searchParams が null の場合、デフォルト値を使用
+            const lat = 33.5902;
+            const lng = 130.4017;
 
-            // ここで周辺のショップを取得し、マーカーを追加するロジックを実装できます
-        });
+            const loader = new Loader({
+                apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+                version: 'weekly',
+            });
+        }
     }, [searchParams]);
 
     return (
