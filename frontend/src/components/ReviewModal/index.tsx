@@ -87,10 +87,10 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, shopId }) =>
                     {error && <p className={styles.error}>{error}</p>}
                 </ModalBody>
                 <ModalFooter>
-                    <Button auto flat color="error" onClick={onClose}>
+                    <Button color="danger" onClick={onClose}>
                         キャンセル
                     </Button>
-                    <Button auto color={"primary"} onClick={handleSubmit} disabled={isSubmitting}>
+                    <Button color={"primary"} onClick={handleSubmit} disabled={isSubmitting}>
                         {isSubmitting ? '投稿中...' : '投稿する'}
                     </Button>
                 </ModalFooter>
