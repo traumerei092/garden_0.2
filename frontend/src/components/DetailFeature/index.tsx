@@ -47,9 +47,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>タイプ</h3>
                     <div className={styles.chipContainer}>
-                        {shop.types && shop.types.map((typeId) => (
-                            <Chip key={typeId.toString()} className={styles.typeChip}>
-                                {getTypeName(typeId)}
+                        {shop.types && shop.types.map((type) => (
+                            <Chip key={type.id.toString()} className={styles.typeChip}>
+                                {getTypeName(type.id)}
                             </Chip>
                         ))}
                     </div>
@@ -57,9 +57,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>コンセプト</h3>
                     <div className={styles.chipContainer}>
-                        {shop.concepts && shop.concepts.map((conceptId) => (
-                            <Chip key={conceptId.toString()} className={styles.conceptChip}>
-                                {getConceptName(conceptId)}
+                        {shop.concepts && shop.concepts.map((concept) => (
+                            <Chip key={concept.id.toString()} className={styles.conceptChip}>
+                                {getConceptName(concept.id)}
                             </Chip>
                         ))}
                     </div>
@@ -67,9 +67,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>レイアウト</h3>
                     <div className={styles.chipContainer}>
-                        {shop.layouts && shop.layouts.map((layoutId) => (
-                            <Chip key={layoutId.toString()} className={styles.layoutChip}>
-                                {getLayoutName(layoutId)}
+                        {shop.layouts && shop.layouts.map((layout) => (
+                            <Chip key={layout.id.toString()} className={styles.layoutChip}>
+                                {getLayoutName(layout.id)}
                             </Chip>
                         ))}
                     </div>
