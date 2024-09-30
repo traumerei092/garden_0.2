@@ -23,6 +23,13 @@ export interface Shop {
   layouts: ShopLayout[];
   icon_image: string | null;
   photos: ShopPhoto[];
+  phone_number: string | null; // ここに追加
+  opening_hours: {
+    [key: string]: {
+      open: string;
+      close: string;
+    };
+  };
 }
 
 export interface ShopType {
