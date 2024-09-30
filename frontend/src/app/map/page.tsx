@@ -14,7 +14,7 @@ const MapPage: React.FC = () => {
             const lng = parseFloat(searchParams.get('lng') || '130.4017');
 
             const loader = new Loader({
-                apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+                apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
                 version: "weekly",
             });
 
