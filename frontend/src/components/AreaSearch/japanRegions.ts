@@ -7,7 +7,9 @@ export interface Prefecture {
 }
 
 export interface JapanRegions {
-  [key: string]: Prefecture;
+  [region: string]: {
+    [prefecture: string]: string[]; // 都道府県が市区町村の配列を持つ
+  };
 }
 
 const japanRegions: JapanRegions = {
