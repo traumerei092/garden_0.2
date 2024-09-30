@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Card, CardBody, CardFooter, Image, Chip, Breadcrumbs, BreadcrumbItem, Button} from "@nextui-org/react";
-import {Shop, ShopConcept, ShopLayout, ShopType} from '../../types/shop';
+import React, { useEffect, useState } from 'react';
+import { Card, CardBody, CardFooter, Image, Chip, Breadcrumbs, BreadcrumbItem, Button } from "@nextui-org/react";
+import { Shop, ShopConcept, ShopLayout, ShopType } from '../../types/shop';
 import styles from './style.module.scss';
-import {CardHeader} from "@nextui-org/card";
-import {formatDistance} from "@/actions/distance";
-import {useRouter} from "next/navigation";
-import {getShopConcepts, getShopLayouts, getShopTypes} from "@/actions/shops";
+import { CardHeader } from "@nextui-org/card";
+import { formatDistance } from "@/actions/distance";
+import { useRouter } from "next/navigation";
+import { getShopConcepts, getShopLayouts, getShopTypes } from "@/actions/shops";
 
 interface ShopCardProps {
     shop: Shop & { distance?: number };
@@ -37,7 +37,7 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
     const getLayoutName = (id: number) => layouts.find(l => l.id === id)?.name || 'Unknown Layout';
 
     const handleShopClick = () => {
-        router.push(`/shops/${shop.id}`);  // ショップの詳細ページへのパスを適切に設定してください
+        router.push(`/shops/${shop.id}`); // ショップ詳細ページへ遷移
     };
 
     // ランダムに1つの要素を選択する関数
@@ -52,11 +52,15 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
         <Button
             className={styles.shopButton}
             onClick={handleShopClick}
+            fullWidth
         >
             <Card className={styles.shopCard}>
+                {/* ショップの名前表示 */}
                 <CardHeader className={styles.cardHeader}>
                     <h1>{shop.name}</h1>
                 </CardHeader>
+
+                {/* ショップ画像 */}
                 <CardBody className={styles.cardBody}>
                     <Image
                         removeWrapper
@@ -67,7 +71,10 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
                     <div className={styles.imageOverlay}></div>
                     <div className={styles.overlay}></div>
                 </CardBody>
+
+                {/* ショップの詳細情報 */}
                 <CardFooter className={styles.cardFooter}>
+                    {/* 距離情報 */}
                     <div className={styles.distance}>
                         <p>現在地から{distanceText}</p>
                         <Breadcrumbs size="sm" className={styles.addressBreadcrumbs} color={"warning"}>
@@ -76,13 +83,14 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
                             <BreadcrumbItem>{shop.address?.town || '町名不明'}</BreadcrumbItem>
                         </Breadcrumbs>
                     </div>
+
+                    {/* タイプ、コンセプト、レイアウトの表示 */}
                     <div className={styles.attribute}>
                         {shop.types && shop.types.map((typeId) => (
                             <Chip key={typeId} className={styles.typeChip}>
                                 {getTypeName(typeId)}
                             </Chip>
                         ))}
-
                     </div>
                     <div className={styles.concept}>
                         {randomConceptId && (
