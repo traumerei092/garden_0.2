@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Loader } from "@googlemaps/js-api-loader"
 
@@ -62,6 +62,14 @@ const MapPage: React.FC = () => {
         <div style={{ height: "100vh", width: "100%" }}>
             <div id="map" style={{ height: "100%", width: "100%" }}></div>
         </div>
+    );
+};
+
+const SuspenseWrapper: React.FC = () => {
+    return (
+        <Suspense fallback={<div>Loading map...</div>}>
+            <MapPage />
+        </Suspense>
     );
 };
 
