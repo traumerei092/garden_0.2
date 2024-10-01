@@ -34,11 +34,19 @@ const ShopCreateForm: React.FC = () => {
             building: '',
         },
         phone_number: '', // 新しく追加
-        latitude: '',
-        longitude: '',
+        latitude: null,
+        longitude: null,
         seat_count: 0,
         capacity: 0,
-        opening_hours: {},
+        opening_hours: {
+            月: { open: '', close: '', isOpen: false },
+            火: { open: '', close: '', isOpen: false },
+            水: { open: '', close: '', isOpen: false },
+            木: { open: '', close: '', isOpen: false },
+            金: { open: '', close: '', isOpen: false },
+            土: { open: '', close: '', isOpen: false },
+            日: { open: '', close: '', isOpen: false },
+        },
         types: [],
         concepts: [],
         layouts: [],
@@ -286,12 +294,13 @@ const ShopCreateForm: React.FC = () => {
                         input: styles.inputInner,
                         inputWrapper: styles.inputWrapper
                     }}
+                    errorMessage={formData.phone_number && formData.phone_number.length < 10 ? "有効な電話番号を入力してください" : undefined}
                 />
 
                 <div className={styles.coordinates}>
                 <Input
                     name="latitude"
-                    value={formData.latitude}
+                    value={formData.latitude !== null ? formData.latitude.toString() : ''}
                     onChange={handleChange}
                     label={"緯度"}
                     placeholder="XX.XXXXXX"
@@ -306,7 +315,7 @@ const ShopCreateForm: React.FC = () => {
                 />
                 <Input
                     name="longitude"
-                    value={formData.longitude}
+                    value={formData.longitude !== null ? formData.longitude.toString() : ''}
                     onChange={handleChange}
                     label={"経度"}
                     placeholder="XX.XXXXXX"
