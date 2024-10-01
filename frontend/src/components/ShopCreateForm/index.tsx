@@ -361,7 +361,7 @@ const ShopCreateForm: React.FC = () => {
                 />
 
                 <OpeningHoursInput
-                    value={formData.opening_hours}
+                    value={formData.opening_hours || { 月: { open: '', close: '', isOpen: false }, 火: { open: '', close: '', isOpen: false }, 水: { open: '', close: '', isOpen: false }, 木: { open: '', close: '', isOpen: false }, 金: { open: '', close: '', isOpen: false }, 土: { open: '', close: '', isOpen: false }, 日: { open: '', close: '', isOpen: false } }}
                     onChange={(newOpeningHours) => setFormData(prev => ({ ...prev, opening_hours: newOpeningHours }))}
                 />
 
