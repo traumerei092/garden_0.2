@@ -283,7 +283,7 @@ const ShopCreateForm: React.FC = () => {
                 <Input
                     name="phone_number"
                     type={"tel"}
-                    value={formData.phone_number}
+                    value={formData.phone_number || ''}
                     onChange={handleChange}
                     label="電話番号"
                     labelPlacement="outside"
