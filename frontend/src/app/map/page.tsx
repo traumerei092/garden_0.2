@@ -4,7 +4,7 @@ import React, {Suspense, useEffect, useState} from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Loader } from "@googlemaps/js-api-loader"
 
-const MapPage: React.FC = () => {
+const MapComponent: React.FC = () => {
     const searchParams = useSearchParams();
     const [map, setMap] = useState<google.maps.Map | null>(null);
     const [isParamsReady, setIsParamsReady] = useState(false);  // 新しくフラグを追加
@@ -49,6 +49,14 @@ const MapPage: React.FC = () => {
         <div style={{height: "100vh", width: "100%"}}>
             <div id="map" style={{height: "100%", width: "100%"}}></div>
         </div>
+    );
+};
+
+const MapPage: React.FC = () => {
+    return (
+        <Suspense fallback={<div>Loading map...</div>}>
+            <MapComponent />
+        </Suspense>
     );
 };
 
