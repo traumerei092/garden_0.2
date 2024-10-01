@@ -7,6 +7,7 @@ import { Loader } from "@googlemaps/js-api-loader"
 const MapPage: React.FC = () => {
     const searchParams = useSearchParams();
     const [map, setMap] = useState<google.maps.Map | null>(null);
+    const [isParamsReady, setIsParamsReady] = useState(false);  // 新しくフラグを追加
 
     useEffect(() => {
         if (searchParams) {
@@ -34,36 +35,20 @@ const MapPage: React.FC = () => {
                     title: "Your Location"
                 });
 
-                // ここで周辺のショップを取得し、マーカーを追加するロジックを実装できます
-            });
-        } else {
-            // searchParams が null の場合、デフォルト値を使用
-            const lat = 33.5902;
-            const lng = 130.4017;
-
-            const loader = new Loader({
-                apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-                version: 'weekly',
-            });
-
-            loader.load().then(() => {
-                const mapElement = document.getElementById("map") as HTMLElement;
-                const newMap = new google.maps.Map(mapElement, {
-                    center: { lat, lng },
-                    zoom: 14,
-                });
-
-                setMap(newMap);
+                setIsParamsReady(true);  // 準備完了のフラグを設定
             });
         }
     }, [searchParams]);
 
+    if (!isParamsReady) {
+        return <div>Loading...</div>;  // デフォルトのローディング表示
+    }
+
+
     return (
-        <Suspense fallback={<div>Loading map...</div>}>
-            <div style={{ height: "100vh", width: "100%" }}>
-                <div id="map" style={{ height: "100%", width: "100%" }}></div>
-            </div>
-        </Suspense>
+        <div style={{height: "100vh", width: "100%"}}>
+            <div id="map" style={{height: "100%", width: "100%"}}></div>
+        </div>
     );
 };
 
