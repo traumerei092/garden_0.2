@@ -9,6 +9,7 @@ import { getShopConcepts, getShopLayouts, getShopTypes } from "@/actions/shops";
 
 interface ShopCardProps {
     shop: Shop & { distance?: number };
+    userLocation?: { latitude: number; longitude: number } | null;
 }
 
 const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
