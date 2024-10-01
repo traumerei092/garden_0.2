@@ -14,7 +14,7 @@ const HeaderController: React.FC = () => {
   // 店舗詳細ページのパターン
   const shopDetailPattern = /^\/shops\/\d+$/
 
-  const showHeader = !hiddenPaths.includes(pathname) && !shopDetailPattern.test(pathname)
+  const showHeader = !hiddenPaths.includes(pathname || '') && !shopDetailPattern.test(pathname || '')
 
   if (!showHeader) return null
 
