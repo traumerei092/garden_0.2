@@ -18,40 +18,42 @@ const SearchConditions = () => {
 
     useEffect(() => {
         const fetchConditionNames = async () => {
-            const keywordParam = searchParams.get('keyword');
-            const typesParam = searchParams.get('types');
-            const conceptsParam = searchParams.get('concepts');
-            const layoutsParam = searchParams.get('layouts');
-            const regionParam = searchParams.get('region');
-            const prefectureParam = searchParams.get('prefecture');
-            const cityParam = searchParams.get('city');
+            if (searchParams) { // null チェック
+                const keywordParam = searchParams.get('keyword');
+                const typesParam = searchParams.get('types');
+                const conceptsParam = searchParams.get('concepts');
+                const layoutsParam = searchParams.get('layouts');
+                const regionParam = searchParams.get('region');
+                const prefectureParam = searchParams.get('prefecture');
+                const cityParam = searchParams.get('city');
 
-            if (keywordParam) setKeyword(decodeURIComponent(keywordParam));
+                if (keywordParam) setKeyword(decodeURIComponent(keywordParam));
 
-            if (typesParam) {
-                const typeIds = decodeURIComponent(typesParam).split(',');
-                const allTypes = await getShopTypes();
-                setTypes(typeIds.map(id => allTypes.find(t => t.id.toString() === id)?.name || ''));
-            }
+                if (typesParam) {
+                    const typeIds = decodeURIComponent(typesParam).split(',');
+                    const allTypes = await getShopTypes();
+                    setTypes(typeIds.map(id => allTypes.find(t => t.id.toString() === id)?.name || ''));
+                }
 
-            if (conceptsParam) {
-                const conceptIds = decodeURIComponent(conceptsParam).split(',');
-                const allConcepts = await getShopConcepts();
-                setConcepts(conceptIds.map(id => allConcepts.find(c => c.id.toString() === id)?.name || ''));
-            }
+                if (conceptsParam) {
+                    const conceptIds = decodeURIComponent(conceptsParam).split(',');
+                    const allConcepts = await getShopConcepts();
+                    setConcepts(conceptIds.map(id => allConcepts.find(c => c.id.toString() === id)?.name || ''));
+                }
 
-            if (layoutsParam) {
-                const layoutIds = decodeURIComponent(layoutsParam).split(',');
-                const allLayouts = await getShopLayouts();
-                setLayouts(layoutIds.map(id => allLayouts.find(l => l.id.toString() === id)?.name || ''));
-            }
+                if (layoutsParam) {
+                    const layoutIds = decodeURIComponent(layoutsParam).split(',');
+                    const allLayouts = await getShopLayouts();
+                    setLayouts(layoutIds.map(id => allLayouts.find(l => l.id.toString() === id)?.name || ''));
+                }
 
-            if (cityParam) {
-                setArea(`${regionParam} > ${prefectureParam} > ${cityParam}`);
-            } else if (prefectureParam) {
-                setArea(`${regionParam} > ${prefectureParam}`);
-            } else if (regionParam) {
-                setArea(regionParam);
+                if (cityParam) {
+                    setArea(`${regionParam} > ${prefectureParam} > ${cityParam}`);
+                } else if (prefectureParam) {
+                    setArea(`${regionParam} > ${prefectureParam}`);
+                } else if (regionParam) {
+                    setArea(regionParam);
+                }
             }
         };
 
