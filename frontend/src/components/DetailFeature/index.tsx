@@ -40,18 +40,53 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
             console.log("Fetched Types:", fetchedTypes);
 
             if (Array.isArray(shop.types)) {
-                const shopTypes = mapToFetchedEntities(shop.types as number[], fetchedTypes, (type) => type.id);
+                // shop.typesがnumber[]であることを確認
+                const shopTypes = shop.types.map((type) => {
+                    if (typeof type === 'number') {
+                        // numberの場合の処理
+                        const matchedType = fetchedTypes.find((fetchedType) => fetchedType.id === type);
+                        return matchedType ? matchedType : null; // matchedTypeが見つからない場合はnull
+                    } else {
+                        // すでにオブジェクトの場合（ShopType[]の場合）
+                        return type;
+                    }
+                }).filter((type): type is ShopType => type !== null && type !== undefined); // nullやundefinedを除去
+
                 setTypes(shopTypes);
+            } else {
+                console.error("shop.types is not an array:", shop.types);
             }
 
+            // コンセプトの処理
             if (Array.isArray(shop.concepts)) {
-                const shopConcepts = mapToFetchedEntities(shop.concepts as number[], fetchedConcepts, (concept) => concept.id);
+                const shopConcepts: ShopConcept[] = shop.concepts.map((concept) => {
+                    if (typeof concept === 'number') {
+                        const matchedConcept = fetchedConcepts.find((fetchedConcept) => fetchedConcept.id === concept);
+                        return matchedConcept ? matchedConcept : null;
+                    } else {
+                        return concept as ShopConcept;
+                    }
+                }).filter((concept): concept is ShopConcept => concept !== null && concept !== undefined);
+
                 setConcepts(shopConcepts);
+            } else {
+                console.error("shop.concepts is not an array:", shop.concepts);
             }
 
+            // レイアウトの処理
             if (Array.isArray(shop.layouts)) {
-                const shopLayouts = mapToFetchedEntities(shop.layouts as number[], fetchedLayouts, (layout) => layout.id);
+                const shopLayouts: ShopLayout[] = shop.layouts.map((layout) => {
+                    if (typeof layout === 'number') {
+                        const matchedLayout = fetchedLayouts.find((fetchedLayout) => fetchedLayout.id === layout);
+                        return matchedLayout ? matchedLayout : null;
+                    } else {
+                        return layout as ShopLayout;
+                    }
+                }).filter((layout): layout is ShopLayout => layout !== null && layout !== undefined);
+
                 setLayouts(shopLayouts);
+            } else {
+                console.error("shop.layouts is not an array:", shop.layouts);
             }
         };
         fetchData();
