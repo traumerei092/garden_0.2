@@ -27,9 +27,23 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
                     getShopConcepts(),
                     getShopLayouts()
                 ]);
-                setTypes(fetchedTypes);
+                if (Array.isArray(shop.types)) {
+                    const shopTypes = shop.types.map((type) => {
+                        if (typeof type === 'number') {
+                            const matchedType = fetchedTypes.find((fetchedType) => fetchedType.id === type);
+                            return matchedType ? matchedType : null;
+                        } else {
+                            return type;
+                        }
+                    }).filter((type): type is ShopType => type !== null && type !== undefined);
+
+                    setTypes(shopTypes);
+                } else {
+                    console.error("shop.types is not an array:", shop.types);
+                }
                 setConcepts(fetchedConcepts);
                 setLayouts(fetchedLayouts);
+                console.log("Fetched Types:", fetchedTypes); // 追加
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -115,23 +129,24 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
 
                     {/* タイプ、コンセプト、レイアウトの表示 */}
                     <div className={styles.attribute}>
-                        {Array.isArray(shop.types) && shop.types.map((typeId) => {
-                            const typeName = getTypeName(typeId);
+                        {Array.isArray(shop.types) && shop.types.every((typeId) => typeof typeId === 'number') && shop.types.map((typeId: number) => {
+                            const foundType = types.find((t) => t.id === typeId);
+                            const typeName = foundType ? foundType.name : 'Unknown Type';
                             console.log("Rendering Type Chip with Name:", typeName);
                             return (
-                            <Chip key={typeId} className={styles.typeChip}>
-                                {typeName}
-                            </Chip>
+                                <Chip key={typeId} className={styles.typeChip}>
+                                    {typeName}
+                                </Chip>
                             );
                         })}
                     </div>
                     <div className={styles.concept}>
                         <Chip className={styles.conceptChip}>
-            {randomConcept?.name}
-        </Chip>
-        <Chip className={styles.layoutChip}>
-            {randomLayout?.name}
-        </Chip>
+                            {randomConcept?.name}
+                        </Chip>
+                        <Chip className={styles.layoutChip}>
+                            {randomLayout?.name}
+                        </Chip>
                     </div>
                 </CardFooter>
             </Card>
