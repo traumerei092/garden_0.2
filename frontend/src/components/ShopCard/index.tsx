@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardBody, CardFooter, Image, Chip, Breadcrumbs, BreadcrumbItem, Button } from "@nextui-org/react";
-import { Shop, ShopConcept, ShopLayout, ShopType } from '../../types/shop';
+import { Shop, ShopConcept, ShopLayout, ShopType } from '@/types/shop';
 import styles from './style.module.scss';
 import { CardHeader } from "@nextui-org/card";
 import { formatDistance } from "@/actions/distance";
@@ -19,20 +19,29 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
     const [layouts, setLayouts] = useState<ShopLayout[]>([]);
 
     useEffect(() => {
+        console.log("useEffect is running");
         const fetchData = async () => {
-            const [fetchedTypes, fetchedConcepts, fetchedLayouts] = await Promise.all([
-                getShopTypes(),
-                getShopConcepts(),
-                getShopLayouts()
-            ]);
-            setTypes(fetchedTypes);
-            setConcepts(fetchedConcepts);
-            setLayouts(fetchedLayouts);
+            try {
+                const [fetchedTypes, fetchedConcepts, fetchedLayouts] = await Promise.all([
+                    getShopTypes(),
+                    getShopConcepts(),
+                    getShopLayouts()
+                ]);
+                setTypes(fetchedTypes);
+                setConcepts(fetchedConcepts);
+                setLayouts(fetchedLayouts);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
         fetchData();
     }, []);
 
-    const getTypeName = (id: number) => types.find(t => t.id === id)?.name || 'Unknown Type';
+    const getTypeName = (id: number) => {
+        const foundType = types.find(t => t.id === id);
+        console.log("Type ID:", id, "Found Type:", foundType);
+        return foundType?.name || 'Unknown Type';
+    };
     const getConceptName = (id: number) => concepts.find(c => c.id === id)?.name || 'Unknown Concept';
     const getLayoutName = (id: number) => layouts.find(l => l.id === id)?.name || 'Unknown Layout';
 
@@ -40,13 +49,33 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
         router.push(`/shops/${shop.id}`); // ショップ詳細ページへ遷移
     };
 
-    // ランダムに1つの要素を選択する関数
-    const getRandomElement = <T extends number>(array: T[]): T | undefined => {
-        return array && array.length > 0 ? array[Math.floor(Math.random() * array.length)] : undefined;
-    };
+    // shop.conceptsとshop.layoutsが存在するかどうかをチェック
+    const randomConceptId = shop.concepts && shop.concepts.length > 0
+      ? shop.concepts[Math.floor(Math.random() * shop.concepts.length)]
+      : undefined;
 
-    const randomConceptId = getRandomElement(shop.concepts);
-    const randomLayoutId = getRandomElement(shop.layouts);
+    const randomLayoutId = shop.layouts && shop.layouts.length > 0
+      ? shop.layouts[Math.floor(Math.random() * shop.layouts.length)]
+      : undefined;
+
+
+    // ConceptとLayoutを取得
+    const randomConcept = typeof randomConceptId === 'number'
+      ? concepts.find((c: ShopConcept) => c.id === randomConceptId) || { name: 'Unknown Concept' }
+      : { name: 'Unknown Concept' };
+
+    const randomLayout = typeof randomLayoutId === 'number'
+      ? layouts.find((l: ShopLayout) => l.id === randomLayoutId) || { name: 'Unknown Layout' }
+      : { name: 'Unknown Layout' };
+
+    // コンソールで確認
+    const randomConceptName = randomConcept.name;
+    const randomLayoutName = randomLayout.name;
+
+    console.log("Shop Types in Shop:", shop.types);
+    console.log("Random Concept Name:", randomConceptName);
+    console.log("Random Layout Name:", randomLayoutName);
+
 
     return (
         <Button
@@ -86,23 +115,23 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
 
                     {/* タイプ、コンセプト、レイアウトの表示 */}
                     <div className={styles.attribute}>
-                        {shop.types && shop.types.map((typeId) => (
+                        {Array.isArray(shop.types) && shop.types.map((typeId) => {
+                            const typeName = getTypeName(typeId);
+                            console.log("Rendering Type Chip with Name:", typeName);
+                            return (
                             <Chip key={typeId} className={styles.typeChip}>
-                                {getTypeName(typeId)}
+                                {typeName}
                             </Chip>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div className={styles.concept}>
-                        {randomConceptId && (
-                            <Chip className={styles.conceptChip}>
-                                {getConceptName(randomConceptId)}
-                            </Chip>
-                        )}
-                        {randomLayoutId && (
-                            <Chip className={styles.layoutChip}>
-                                {getLayoutName(randomLayoutId)}
-                            </Chip>
-                        )}
+                        <Chip className={styles.conceptChip}>
+            {randomConcept?.name}
+        </Chip>
+        <Chip className={styles.layoutChip}>
+            {randomLayout?.name}
+        </Chip>
                     </div>
                 </CardFooter>
             </Card>
