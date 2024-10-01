@@ -4,6 +4,21 @@ import {Chip, Image} from "@nextui-org/react";
 import { Shop, ShopType, ShopConcept, ShopLayout } from "@/types/shop";
 import { getShopTypes, getShopConcepts, getShopLayouts } from "@/actions/shops";
 
+// 共通のマッピング処理を関数化
+function mapToFetchedEntities<T>(shopIds: number[], fetchedEntities: T[], getId: (entity: T) => number) {
+    return shopIds
+        .map((id) => {
+            const matchedEntity = fetchedEntities.find((entity) => getId(entity) === id);
+            if (matchedEntity) {
+                return matchedEntity;
+            } else {
+                console.warn(`ID ${id} not found in fetchedEntities`);
+                return null;
+            }
+        })
+        .filter(Boolean) as T[];
+}
+
 interface DetailFeatureProps {
     shop: Shop;
 }
@@ -20,16 +35,35 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 getShopConcepts(),
                 getShopLayouts()
             ]);
-            setTypes(fetchedTypes);
-            setConcepts(fetchedConcepts);
-            setLayouts(fetchedLayouts);
+
+            console.log("Shop Types:", shop.types);
+            console.log("Fetched Types:", fetchedTypes);
+
+            if (Array.isArray(shop.types)) {
+                const shopTypes = mapToFetchedEntities(shop.types as number[], fetchedTypes, (type) => type.id);
+                setTypes(shopTypes);
+            }
+
+            if (Array.isArray(shop.concepts)) {
+                const shopConcepts = mapToFetchedEntities(shop.concepts as number[], fetchedConcepts, (concept) => concept.id);
+                setConcepts(shopConcepts);
+            }
+
+            if (Array.isArray(shop.layouts)) {
+                const shopLayouts = mapToFetchedEntities(shop.layouts as number[], fetchedLayouts, (layout) => layout.id);
+                setLayouts(shopLayouts);
+            }
         };
         fetchData();
-    }, []);
+    }, [shop.types]);
 
     const getTypeName = (id: number) => types.find(t => t.id === id)?.name || 'Unknown Type';
     const getConceptName = (id: number) => concepts.find(c => c.id === id)?.name || 'Unknown Concept';
     const getLayoutName = (id: number) => layouts.find(l => l.id === id)?.name || 'Unknown Layout';
+
+    console.log("Shop Types:", shop.types);
+    console.log("Shop Concepts:", shop.concepts);
+    console.log("Shop Layouts:", shop.layouts);
 
     return (
         <div className={styles.layout}>
@@ -47,9 +81,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>タイプ</h3>
                     <div className={styles.chipContainer}>
-                        {shop.types && shop.types.map((type) => (
+                        {types.map((type) => (
                             <Chip key={type.id.toString()} className={styles.typeChip}>
-                                {getTypeName(type.id)}
+                                {type.name}
                             </Chip>
                         ))}
                     </div>
@@ -57,9 +91,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>コンセプト</h3>
                     <div className={styles.chipContainer}>
-                        {shop.concepts && shop.concepts.map((concept) => (
+                        {concepts.map((concept) => (
                             <Chip key={concept.id.toString()} className={styles.conceptChip}>
-                                {getConceptName(concept.id)}
+                                {concept.name}
                             </Chip>
                         ))}
                     </div>
@@ -67,9 +101,9 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                 <div className={styles.featureSection}>
                     <h3 className={styles.featureTitle}>レイアウト</h3>
                     <div className={styles.chipContainer}>
-                        {shop.layouts && shop.layouts.map((layout) => (
+                        {layouts.map((layout) => (
                             <Chip key={layout.id.toString()} className={styles.layoutChip}>
-                                {getLayoutName(layout.id)}
+                                {layout.name}
                             </Chip>
                         ))}
                     </div>
