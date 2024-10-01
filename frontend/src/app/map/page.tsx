@@ -59,16 +59,10 @@ const MapPage: React.FC = () => {
     }, [searchParams]);
 
     return (
-        <div style={{ height: "100vh", width: "100%" }}>
-            <div id="map" style={{ height: "100%", width: "100%" }}></div>
-        </div>
-    );
-};
-
-const SuspenseWrapper: React.FC = () => {
-    return (
         <Suspense fallback={<div>Loading map...</div>}>
-            <MapPage />
+            <div style={{ height: "100vh", width: "100%" }}>
+                <div id="map" style={{ height: "100%", width: "100%" }}></div>
+            </div>
         </Suspense>
     );
 };
