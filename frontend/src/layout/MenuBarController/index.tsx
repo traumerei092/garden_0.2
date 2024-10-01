@@ -6,6 +6,10 @@ import MenuBar from '@/components/MenuBar/index';
 
 const MenuBarController: React.FC = () => {
   const pathname = usePathname();
+
+  if (!pathname) {
+    return null;
+  }
   const isAuthPage = ['/login', '/signup'].includes(pathname);
 
   if (isAuthPage) {
