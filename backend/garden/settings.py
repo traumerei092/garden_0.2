@@ -54,6 +54,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOWED_ORIGINS = []
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # フロントエンドのURL
+    "https://garden-0-2.vercel.app/",
 ]
 CORS_ALLOW_HEADERS = [
     'accept',

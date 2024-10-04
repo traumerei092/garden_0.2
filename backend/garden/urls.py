@@ -1,13 +1,7 @@
 from django.contrib import admin
-from django.http import HttpResponse
 from django.urls import path, include
 
-# シンプルなトップページを追加
-def index(request):
-    return HttpResponse("Welcome to the Garden Project Home Page")
-
 urlpatterns = [
-    path('', index),  # トップページに対応するルート
     path("api/auth/", include("djoser.urls")),
     path("api/auth/", include("djoser.urls.jwt")),
     # アカウント

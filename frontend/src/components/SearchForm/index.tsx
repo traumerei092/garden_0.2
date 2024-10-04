@@ -10,6 +10,18 @@ import {useRouter} from "next/navigation";
 import SearchModal from "@/components/SearchModal";
 
 const SearchForm = () => {
+
+    useEffect(() => {
+    const fetchData = async () => {
+      // Djangoのshopsエンドポイントにリクエストを送る
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shops/`);
+      const data = await response.json();
+      console.log(data); // データが正しく取得されるか確認
+    };
+
+    fetchData(); // ページ読み込み時に実行
+  }, []);
+
     const [activeButton, setActiveButton] = useState('keyword');
     const [isLoading, setIsLoading] = useState(false);
     const [keyword, setKeyword] = useState('');
