@@ -15,6 +15,7 @@ const SearchForm = () => {
     const [keyword, setKeyword] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState<'condition' | 'area'>('condition');
+    const [initialActiveKey, setInitialActiveKey] = useState("condition");
 
     const router = useRouter();
     const handleNavigation = () => {
@@ -51,6 +52,7 @@ const SearchForm = () => {
         setModalType(type);
         setIsModalOpen(true);
         setActiveButton(type);
+        setInitialActiveKey(type === 'area' ? 'area' : 'condition');
     };
 
     return (
@@ -124,6 +126,7 @@ const SearchForm = () => {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 type={modalType}
+                initialActiveKey={initialActiveKey}
             />
         </div>
     )

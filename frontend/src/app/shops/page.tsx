@@ -24,6 +24,31 @@ function ShopsContent() {
     const { data: session, status } = useSession();
     const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
     const searchParams = useSearchParams();
+    const [showCreateShop, setShowCreateShop] = useState(true);
+
+    useEffect(() => {
+        const controlCreateShop = () => {
+            if (typeof window !== 'undefined') {
+                if (window.scrollY === 0) { // 画面の一番上
+                    setShowCreateShop(false);
+                } else { // それ以外の位置
+                    setShowCreateShop(true);
+                }
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', controlCreateShop);
+
+            // 初期状態を設定
+            controlCreateShop();
+
+            // クリーンアップ関数
+            return () => {
+                window.removeEventListener('scroll', controlCreateShop);
+            };
+        }
+    }, []);
 
     useEffect(() => {
         const fetchShopsAndLocation = async () => {
@@ -95,7 +120,7 @@ function ShopsContent() {
             {loading && <div>Loading shops...</div>}
             {error && <div>Error: {error}</div>}
             {!loading && !error && <ShopList shops={shops} userLocation={userLocation} />}
-            <CreateShop />
+            <CreateShop  show={showCreateShop} />
             <svg width="0" height="0">
                 <defs>
                     <linearGradient id="gradientColors" x1="0%" y1="0%" x2="100%" y2="0%">

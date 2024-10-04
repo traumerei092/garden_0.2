@@ -23,11 +23,12 @@ interface SearchModalProps {
     isOpen: boolean;
     onClose: () => void;
     type: 'condition' | 'area';
+    initialActiveKey: string;
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, type }) => {
+const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, type, initialActiveKey }) => {
     const [isVisible, setIsVisible] = useState(true);
-    const [activeKey, setActiveKey] = useState("condition");
+    const [activeKey, setActiveKey] = useState(initialActiveKey);
     const [keyword, setKeyword] = useState('');
     const [slideDirection, setSlideDirection] = useState<'left' | 'right' | ''>('');
     const [searchCount, setSearchCount] = useState(0);
@@ -99,6 +100,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, type }) => {
             return () => clearTimeout(timer);
         }
     }, [slideDirection]);
+
+    useEffect(() => {
+        setActiveKey(initialActiveKey);  // この useEffect を追加
+    }, [initialActiveKey]);
 
     return (
         <Modal

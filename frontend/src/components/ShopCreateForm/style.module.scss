@@ -79,3 +79,46 @@
 .selectValue {
   padding: 0 8px;
 }
+
+.openHours {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 110px;
+}
+
+.footer {
+  width: 100%;
+  height: 110px;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(7, 14, 54, 1);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.footerLeft {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backButton {
+  margin: 20px 0 50px 0;
+  background-color: rgba(7, 14, 54, 1);
+  color: white;
+}
+
+.footerRight {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

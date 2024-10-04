@@ -9,6 +9,7 @@ import {useRouter} from "next/navigation";
 import {Button, Input, Select, SelectItem} from "@nextui-org/react";
 import CustomSelect from "@/components/CustomSelect";
 import OpeningHoursInput from "@/components/OpeningHoursInput";
+import {ChevronLeft} from "lucide-react";
 
 const prefectures = [
   "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県",
@@ -130,6 +131,10 @@ const ShopCreateForm: React.FC = () => {
           console.error('User not authenticated');
           // TODO: Add error message
         }
+    };
+
+    const handleBack = () => {
+        router.push(`/shops`);  // ショップの詳細ページへのパスを適切に設定してください
     };
 
   return (
@@ -360,14 +365,24 @@ const ShopCreateForm: React.FC = () => {
                     }}
                 />
 
-                <OpeningHoursInput
-                    value={formData.opening_hours || { 月: { open: '', close: '', isOpen: false }, 火: { open: '', close: '', isOpen: false }, 水: { open: '', close: '', isOpen: false }, 木: { open: '', close: '', isOpen: false }, 金: { open: '', close: '', isOpen: false }, 土: { open: '', close: '', isOpen: false }, 日: { open: '', close: '', isOpen: false } }}
-                    onChange={(newOpeningHours) => setFormData(prev => ({ ...prev, opening_hours: newOpeningHours }))}
-                />
-
-                <Button type="submit" className={styles.button}>
-                    Create Shop
-                </Button>
+                <div className={styles.openHours}>
+                    <OpeningHoursInput
+                        value={formData.opening_hours || { 月: { open: '', close: '', isOpen: false }, 火: { open: '', close: '', isOpen: false }, 水: { open: '', close: '', isOpen: false }, 木: { open: '', close: '', isOpen: false }, 金: { open: '', close: '', isOpen: false }, 土: { open: '', close: '', isOpen: false }, 日: { open: '', close: '', isOpen: false } }}
+                        onChange={(newOpeningHours) => setFormData(prev => ({ ...prev, opening_hours: newOpeningHours }))}
+                    />
+                </div>
+              <footer className={styles.footer}>
+                  <div className={styles.footerLeft}>
+                      <Button isIconOnly onClick={handleBack} className={styles.backButton}>
+                          <ChevronLeft/>
+                      </Button>
+                  </div>
+                  <div className={styles.footerRight}>
+                      <Button type="submit" className={styles.button}>
+                          Create Shop
+                      </Button>
+                  </div>
+              </footer>
           </div>
       </form>
   );
