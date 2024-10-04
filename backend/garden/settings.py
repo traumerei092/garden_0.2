@@ -12,10 +12,10 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = "django-insecure-*_sx^6yjr()h0)@!m-6d(r795e3)mj3@u=1rws2tx62st!fraz"
 
-DEBUG = True
+DEBUG = False
 
 # 本場環境では、ALLOWED_HOSTSを指定する
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['98.83.143.202', 'garden-0-2.vercel.app', 'localhost']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -53,8 +53,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 # 本番環境では、CORS_ALLOWED_ORIGINSを指定する
 # CORS_ALLOWED_ORIGINS = []
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # フロントエンドのURL
-    "https://garden-0-2.vercel.app/",
+    "https://garden-0-2.vercel.app",
+    "http://98.83.143.202:8000",
 ]
 CORS_ALLOW_HEADERS = [
     'accept',

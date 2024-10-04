@@ -25,7 +25,7 @@ const axiosInstance = createAxiosInstance();
 
 export const getShopById = async (id: number): Promise<Shop> => {
     try {
-        const response = await axiosInstance.get(`/api/shops/shops/${id}/`);
+        const response = await axiosInstance.get(`/shops/shops/${id}/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching shop:', error);
@@ -36,7 +36,7 @@ export const getShopById = async (id: number): Promise<Shop> => {
 export const getShopTypes = async (): Promise<ShopType[]> => {
   console.log('Fetching shop types...');
   try {
-    const response = await axiosInstance.get('/api/shops/types/');
+    const response = await axiosInstance.get('/shops/types/');
     console.log('Shop types response:', response.data);
     return response.data;
   } catch (error) {
@@ -47,7 +47,7 @@ export const getShopTypes = async (): Promise<ShopType[]> => {
 
 export const getShopConcepts = async (): Promise<ShopConcept[]> => {
   try {
-    const response = await axiosInstance.get('/api/shops/concepts/');
+    const response = await axiosInstance.get('/shops/concepts/');
     return response.data;
   } catch (error) {
     console.error('Error fetching shop concepts:', error);
@@ -57,7 +57,7 @@ export const getShopConcepts = async (): Promise<ShopConcept[]> => {
 
 export const getShopLayouts = async (): Promise<ShopLayout[]> => {
   try {
-    const response = await axiosInstance.get('/api/shops/layouts/');
+    const response = await axiosInstance.get('/shops/layouts/');
     return response.data;
   } catch (error) {
     console.error('Error fetching shop layouts:', error);
@@ -88,7 +88,7 @@ export const createShop = async (shopData: ShopFormData): Promise<Shop> => {
 
     console.log('Sending shop data:', Object.fromEntries(formData));
 
-    const response = await axiosInstance.post('/api/shops/shops/', formData, {
+    const response = await axiosInstance.post('/shops/shops/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -109,7 +109,7 @@ export const uploadShopPhoto = async (shopId: number, photo: File, caption: stri
   formData.append('caption', caption);
   formData.append('shop', shopId.toString());
 
-  const response = await axios.post(`${API_URL}/api/shops/photos/`, formData, {
+  const response = await axios.post(`${API_URL}/shops/photos/`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -136,7 +136,7 @@ export const getShops = async (
         if (prefecture) params.append('prefecture', prefecture);
         if (city) params.append('city', city);
 
-        const response = await axios.get(`${API_URL}/api/shops/shops/`, { params });
+        const response = await axios.get(`${API_URL}/shops/shops/`, { params });
         return response.data;
     } catch (error) {
         console.error('Error fetching shops:', error);
