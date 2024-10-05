@@ -116,6 +116,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, type, initia
             }}
             size={"full"}
             scrollBehavior={"inside"}
+            placement="top"
         >
             <ModalContent>
                 <ModalHeader className={styles.modalHeader}>
