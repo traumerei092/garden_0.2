@@ -64,7 +64,7 @@ const fetchAPI = async (url: string, options: RequestInit) => {
 // JWTアクセストークンの有効性を検証する関数
 const verifyAccessToken = async (token: string) => {
   try {
-    const response = await fetchAPI("/api/auth/jwt/verify/", {
+    const response = await fetchAPI("/auth/jwt/verify/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token }),
@@ -80,7 +80,7 @@ const verifyAccessToken = async (token: string) => {
 // JWTアクセストークンを更新する関数
 const refreshAccessToken = async (token: JWT): Promise<JWT> => {
   try {
-    const { access } = await fetchAPI("/api/auth/jwt/refresh/", {
+    const { access } = await fetchAPI("/auth/jwt/refresh/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh: token.refreshToken }),
@@ -102,8 +102,9 @@ const refreshAccessToken = async (token: JWT): Promise<JWT> => {
 // ユーザー認証とユーザー情報取得を行う関数
 const authorizeUser = async (email: string, password: string): Promise<User> => {
   console.log("Authorizing user:", email);
+
   // JWTトークンを取得
-  const auth = await fetchAPI("/api/auth/jwt/create/", {
+  const auth = await fetchAPI("/auth/jwt/create/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -118,7 +119,7 @@ const authorizeUser = async (email: string, password: string): Promise<User> => 
   }
 
   // 取得したトークンを使用してユーザー情報を取得
-  const userData = await fetchAPI("/api/auth/users/me/", {
+  const userData = await fetchAPI("/auth/users/me/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
