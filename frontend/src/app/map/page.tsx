@@ -21,6 +21,9 @@ const MapComponent: React.FC = () => {
 
             loader.load().then(() => {
                 const mapElement = document.getElementById("map") as HTMLElement;
+
+                // mapElementの存在をログに出力
+                console.log("Map element:", mapElement);
                 // mapElementがnullでないことを確認
                 if (mapElement) {
                     const newMap = new google.maps.Map(mapElement as HTMLElement, {
@@ -40,7 +43,11 @@ const MapComponent: React.FC = () => {
                 } else {
                     console.error("Map element not found.");
                 }
+            }).catch((error) => {
+                console.error("Google Maps API Loader error:", error);
             });
+        } else {
+            console.error("Search params not found");
         }
     }, [searchParams]);
 
