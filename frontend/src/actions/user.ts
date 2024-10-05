@@ -4,6 +4,7 @@ import { z } from "zod"
 import {signOut} from "next-auth/react";
 import {getServerSession} from "next-auth";
 import {authOptions} from "../../lib/nextauth";
+import { User } from '@/types/user';
 
 // サインアップ時の入力値の検証スキーマを定義
 const signUpSchema = z.object({
@@ -187,3 +188,18 @@ export const invalidateSession = async () => {
     }
   }
 }
+
+export const getUserProfile = async (): Promise<User> => {
+  // ここで実際のAPIコールを行う
+  // 仮のデータを返す
+  return {
+    id: '1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    avatar: 'https://i.pravatar.cc/300',
+    bio: 'バーとカクテルが大好きです。新しい味との出会いを楽しみにしています。',
+    favoriteShops: 15,
+    reviews: 32,
+    createdAt: '2023-01-01',
+  };
+};

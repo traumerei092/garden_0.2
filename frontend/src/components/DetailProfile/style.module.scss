@@ -29,3 +29,20 @@
   margin-right: 15px;
   color: #00c6ff;
 }
+
+.updateShop {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.updateButton {
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: underline;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10px 0;
+}

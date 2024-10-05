@@ -28,17 +28,13 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = ['postal_code', 'prefecture', 'city', 'district', 'town', 'street_address', 'building']
 
 class ShopSerializer(serializers.ModelSerializer):
-    types = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopType.objects.all(), required=False)
-    concepts = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopConcept.objects.all(), required=False)
-    layouts = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopLayout.objects.all(), required=False)
-    icon_image = serializers.ImageField(required=False)
-    address = AddressSerializer()
-
     address = AddressSerializer()
     types = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopType.objects.all(), required=False)
     concepts = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopConcept.objects.all(), required=False)
     layouts = serializers.PrimaryKeyRelatedField(many=True, queryset=ShopLayout.objects.all(), required=False)
     icon_image = serializers.ImageField(required=False)
+    seat_count = serializers.IntegerField(min_value=0)
+    capacity = serializers.IntegerField(min_value=0)
 
     class Meta:
         model = Shop
@@ -49,29 +45,43 @@ class ShopSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_by', 'created_at', 'updated_at']
 
     def create(self, validated_data):
+        print("Validated data in create method:", validated_data)
         address_data = validated_data.pop('address')
-        types = validated_data.pop('types', [])
-        concepts = validated_data.pop('concepts', [])
-        layouts = validated_data.pop('layouts', [])
+        types_data = validated_data.pop('types', [])
+        concepts_data = validated_data.pop('concepts', [])
+        layouts_data = validated_data.pop('layouts', [])
+
+        print("Types data:", types_data)
+        print("Concepts data:", concepts_data)
+        print("Layouts data:", layouts_data)
 
         address = Address.objects.create(**address_data)
         shop = Shop.objects.create(address=address, created_by=self.context['request'].user, **validated_data)
 
-        shop.types.set(types)
-        shop.concepts.set(concepts)
-        shop.layouts.set(layouts)
+        shop.types.set(types_data)
+        shop.concepts.set(concepts_data)
+        shop.layouts.set(layouts_data)
         return shop
 
-    def to_internal_value(self, data):
-        seat_count = data.get('seat_count')
-        capacity = data.get('capacity')
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop('address', None)
+        types_data = validated_data.pop('types', None)
+        concepts_data = validated_data.pop('concepts', None)
+        layouts_data = validated_data.pop('layouts', None)
 
-        if seat_count is not None:
-            data['seat_count'] = int(seat_count)
-        if capacity is not None:
-            data['capacity'] = int(capacity)
+        if address_data:
+            address_serializer = self.fields['address']
+            address_instance = instance.address
+            address_serializer.update(address_instance, address_data)
 
-        return super().to_internal_value(data)
+        if types_data is not None:
+            instance.types.set(types_data)
+        if concepts_data is not None:
+            instance.concepts.set(concepts_data)
+        if layouts_data is not None:
+            instance.layouts.set(layouts_data)
+
+        return super().update(instance, validated_data)
 
 
 class ReviewPhotoSerializer(serializers.ModelSerializer):

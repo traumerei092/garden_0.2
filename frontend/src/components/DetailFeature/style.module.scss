@@ -76,3 +76,20 @@
   color: white;
   height: 1.5rem;
 }
+
+.updateShop {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.updateButton {
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: underline;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10px 0;
+}

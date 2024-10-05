@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Card, Avatar } from "@nextui-org/react";
-import { Heart } from 'lucide-react';
+import {Heart, SmileIcon} from 'lucide-react';
 import styles from './style.module.scss';
 import { getReviews } from '@/actions/reviews';
 import DividerLine from "@/components/DividerLine";
 
 interface Review {
     id: number;
-    user: {
-        name: string;
-        avatar: string;
-    };
+    user: string;
+    avatar: string;
     title: string;
     content: string;
     likes: number;
@@ -52,11 +50,13 @@ const DetailReview: React.FC<DetailReviewProps> = ({ shopId }) => {
                     <div className={styles.reviewHeader}>
                         <div className={styles.reviewHeaderLeft}>
                             <Avatar
-                                src={review.user.avatar || "/default-avatar.png"}
-                                name={review.user.name}
+                                icon={!review.avatar && <SmileIcon />}
+                                src={review.avatar || undefined}
                                 className={styles.avatar}
                             />
-                            <span className={styles.userName}>{review.user.name}</span>
+                        </div>
+                        <div className={styles.reviewHeaderCenter}>
+                            <p className={styles.userName}>{review.user}</p>
                         </div>
                         <div className={styles.reviewHeaderRight}>
                             <Heart className={styles.likeIcon} />

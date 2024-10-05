@@ -23,7 +23,7 @@
 }
 
 .reviewHeaderLeft {
-  width: 90%;
+  width: 15%;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -33,8 +33,13 @@
   margin-right: 5%;
 }
 
+.reviewHeaderCenter {
+  width: 75%;
+}
+
 .userName {
   font-size: 18px;
+  color: white;
 }
 
 .likeCount {
@@ -70,4 +75,8 @@
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+
+.smile {
+  color: white;
 }

@@ -15,7 +15,8 @@ export interface Shop {
   latitude: number | null;
   longitude: number | null;
   seat_count: number;
-  created_by: number;
+  capacity: number;
+  created_by: string;
   created_at: string;
   updated_at: string;
   types: ShopType[];

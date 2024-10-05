@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./style.module.scss";
-import {Chip, Image} from "@nextui-org/react";
+import {Button, Chip, Image} from "@nextui-org/react";
 import { Shop, ShopType, ShopConcept, ShopLayout } from "@/types/shop";
 import { getShopTypes, getShopConcepts, getShopLayouts } from "@/actions/shops";
+import {useRouter} from "next/navigation";
 
 // 共通のマッピング処理を関数化
 function mapToFetchedEntities<T>(shopIds: number[], fetchedEntities: T[], getId: (entity: T) => number) {
@@ -27,6 +28,11 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
     const [types, setTypes] = useState<ShopType[]>([]);
     const [concepts, setConcepts] = useState<ShopConcept[]>([]);
     const [layouts, setLayouts] = useState<ShopLayout[]>([]);
+    const router = useRouter();
+
+    const handleUpdate = () => {
+        router.push(`/shops/${shop.id}/update`);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -143,6 +149,11 @@ const DetailFeature: React.FC<DetailFeatureProps> = ({ shop }) => {
                         ))}
                     </div>
                 </div>
+            </div>
+            <div className={styles.updateShop}>
+                <Button className={styles.updateButton} onClick={handleUpdate}>
+                    情報を修正する
+                </Button>
             </div>
         </div>
     )

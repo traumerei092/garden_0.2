@@ -80,8 +80,8 @@ export const createShop = async (shopData: ShopFormData): Promise<Shop> => {
       } else if (key === 'opening_hours') {
         formData.append(key, JSON.stringify(value));
       } else if (Array.isArray(value)) {
-        value.forEach(item => formData.append(`${key}[]`, item.toString()));
-      } else if (typeof value === 'string' || typeof value === 'number') {
+        value.forEach(item => formData.append(`${key}`, item.toString()));
+      } else if (value !== null && value !== undefined) {
         formData.append(key, value.toString());
       }
     });
@@ -97,8 +97,9 @@ export const createShop = async (shopData: ShopFormData): Promise<Shop> => {
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       console.error('Server responded with:', error.response.status, error.response.data);
+    } else {
+      console.error('Error creating shop:', error);
     }
-    console.error('Error creating shop:', error);
     throw error;
   }
 };
@@ -166,6 +167,49 @@ export const getAddressFromPostalCode = async (postalCode: string): Promise<Part
     }
   } catch (error) {
     console.error('郵便番号から住所を取得中にエラーが発生しました:', error);
+    throw error;
+  }
+};
+
+export const updateShop = async (id: number, shopData: ShopFormData): Promise<Shop> => {
+  try {
+    const formData = new FormData();
+    Object.entries(shopData).forEach(([key, value]) => {
+      if (key === 'address' && typeof value === 'object' && value !== null) {
+        Object.entries(value).forEach(([addressKey, addressValue]) => {
+          if (typeof addressValue === 'string') {
+            formData.append(`address.${addressKey}`, addressValue);
+          }
+        });
+      } else if (key === 'icon_image' && value instanceof File) {
+        formData.append(key, value);
+      } else if (key === 'opening_hours') {
+        formData.append(key, JSON.stringify(value));
+      } else if (Array.isArray(value)) {
+        value.forEach(item => formData.append(`${key}`, item.toString()));
+      } else if (value !== null && value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    });
+
+    const response = await axiosInstance.put(`/shops/shops/${id}/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating shop:', error);
+    throw error;
+  }
+};
+
+export const getShop = async (id: number): Promise<Shop> => {
+  try {
+    const response = await axiosInstance.get(`/shops/shops/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching shop:', error);
     throw error;
   }
 };

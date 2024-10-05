@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./style.module.scss";
-import {Chip, Image} from "@nextui-org/react";
+import {Button, Chip, Image} from "@nextui-org/react";
 import { Shop, ShopType, ShopConcept, ShopLayout } from "@/types/shop";
 import { getShopTypes, getShopConcepts, getShopLayouts } from "@/actions/shops";
-import {Clock, MapPin, Phone, Users} from "lucide-react";
+import {Clock, MapPin, Phone, User, Users} from "lucide-react";
+import {useRouter} from "next/navigation";
 
 interface DetailProfileProps {
     shop: Shop;
 }
 
 const DetailProfile: React.FC<DetailProfileProps> = ({ shop }) => {
+    const router = useRouter();
+
+    const handleUpdate = () => {
+        router.push(`/shops/${shop.id}/update`);
+    };
 
     return (
         <div className={styles.profileContainer}>
@@ -45,6 +51,18 @@ const DetailProfile: React.FC<DetailProfileProps> = ({ shop }) => {
                         <p>{`${shop.seat_count}席`}</p>
                     </div>
                 </div>
+                <div className={styles.infoItem}>
+                    <User className={styles.icon}/>
+                    <div>
+                        <h4>店舗登録者</h4>
+                        <p>{shop.created_by}</p>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.updateShop}>
+                <Button className={styles.updateButton} onClick={handleUpdate}>
+                    情報を修正する
+                </Button>
             </div>
         </div>
     )

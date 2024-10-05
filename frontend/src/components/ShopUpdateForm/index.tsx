@@ -2,14 +2,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { ShopFormData, ShopType, ShopConcept, ShopLayout, Address } from '../../types/shop';
-import { createShop, getShopTypes, getShopConcepts, getShopLayouts, getAddressFromPostalCode } from '../../actions/shops';
+import { ShopFormData, Shop, ShopType, ShopConcept, ShopLayout } from '../../types/shop';
+import {
+    updateShop,
+    getShopTypes,
+    getShopConcepts,
+    getShopLayouts,
+    getShop,
+    getAddressFromPostalCode
+} from '../../actions/shops';
 import styles from './style.module.scss';
-import {useRouter} from "next/navigation";
-import {Button, Input, Select, SelectItem} from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { Button, Input, Select, SelectItem, Image } from "@nextui-org/react";
 import CustomSelect from "@/components/CustomSelect";
 import OpeningHoursInput from "@/components/OpeningHoursInput";
-import {ChevronLeft} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 const prefectures = [
   "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県",
@@ -19,10 +26,12 @@ const prefectures = [
   "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"
 ];
 
-const ShopCreateForm: React.FC = () => {
+const ShopUpdateForm: React.FC<{ shopId: number }> = ({ shopId }) => {
     const router = useRouter();
-
     const { data: session, status } = useSession();
+    const [types, setTypes] = useState<ShopType[]>([]);
+    const [concepts, setConcepts] = useState<ShopConcept[]>([]);
+    const [layouts, setLayouts] = useState<ShopLayout[]>([]);
     const [formData, setFormData] = useState<ShopFormData>({
         name: '',
         address: {
@@ -34,42 +43,61 @@ const ShopCreateForm: React.FC = () => {
             street_address: '',
             building: '',
         },
-        phone_number: '', // 新しく追加
+        phone_number: '',
         latitude: null,
         longitude: null,
         seat_count: 0,
         capacity: 0,
-        opening_hours: {
-            月: { open: '', close: '', isOpen: false },
-            火: { open: '', close: '', isOpen: false },
-            水: { open: '', close: '', isOpen: false },
-            木: { open: '', close: '', isOpen: false },
-            金: { open: '', close: '', isOpen: false },
-            土: { open: '', close: '', isOpen: false },
-            日: { open: '', close: '', isOpen: false },
-        },
+        opening_hours: null,
         types: [],
         concepts: [],
         layouts: [],
     });
-    const [types, setTypes] = useState<ShopType[]>([]);
-    const [concepts, setConcepts] = useState<ShopConcept[]>([]);
-    const [layouts, setLayouts] = useState<ShopLayout[]>([]);
-    const [iconImage, setIconImage] = useState<File | null>(null);
+    const [iconImageUrl, setIconImageUrl] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-          const [typesData, conceptsData, layoutsData] = await Promise.all([
-            getShopTypes(),
-            getShopConcepts(),
-            getShopLayouts(),
-          ]);
-          setTypes(typesData);
-          setConcepts(conceptsData);
-          setLayouts(layoutsData);
+            try {
+                const [shopData, typesData, conceptsData, layoutsData] = await Promise.all([
+                    getShop(shopId),
+                    getShopTypes(),
+                    getShopConcepts(),
+                    getShopLayouts(),
+                ]);
+
+                const formDataFromShop: ShopFormData = {
+                    name: shopData.name,
+                    address: shopData.address,
+                    phone_number: shopData.phone_number || '',
+                    latitude: shopData.latitude,
+                    longitude: shopData.longitude,
+                    seat_count: shopData.seat_count,
+                    capacity: shopData.capacity,
+                    opening_hours: shopData.opening_hours
+                        ? Object.entries(shopData.opening_hours).reduce((acc, [day, hours]) => {
+                            return {
+                                ...acc,
+                                [day]: { ...hours, isOpen: true }
+                            };
+                        }, {} as ShopFormData['opening_hours'])
+                        : null,
+                    types: shopData.types.map(t => t.id),
+                    concepts: shopData.concepts.map(c => c.id),
+                    layouts: shopData.layouts.map(l => l.id),
+                };
+                setFormData(formDataFromShop);
+                setTypes(typesData);
+                setConcepts(conceptsData);
+                setLayouts(layoutsData);
+                if (shopData.icon_image) {
+                    setIconImageUrl(shopData.icon_image);
+                }
+            } catch (error) {
+                console.error('Error fetching shop data:', error);
+            }
         };
         fetchData();
-    }, []);
+    }, [shopId]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -105,47 +133,43 @@ const ShopCreateForm: React.FC = () => {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-          setIconImage(e.target.files[0]);
+            const file = e.target.files[0];
+            setFormData(prev => ({
+                ...prev,
+                icon_image: file
+            }));
+            setIconImageUrl(URL.createObjectURL(file));
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form data before submission:', formData);  // デバッグ用ログ
         if (status === 'authenticated') {
-          try {
-            const shopDataToSubmit: ShopFormData = {
-              ...formData,
-              types: formData.types.map(Number),
-              concepts: formData.concepts.map(Number),
-              layouts: formData.layouts.map(Number),
-              icon_image: iconImage || undefined,
-            };
-            const newShop = await createShop(shopDataToSubmit);
-            console.log('New shop created:', newShop);
-            router.push('/shops');
-          } catch (error) {
-            console.error('Error creating shop:', error);
-            // TODO: Add error message
-          }
+            try {
+                const updatedShop = await updateShop(shopId, formData);
+                console.log('Shop updated:', updatedShop);
+                router.push(`/shops/${shopId}`);
+            } catch (error) {
+                console.error('Error updating shop:', error);
+            }
         } else {
-          console.error('User not authenticated');
-          // TODO: Add error message
+            console.error('User not authenticated');
         }
     };
 
     const handleBack = () => {
-        router.push(`/shops`);  // ショップの詳細ページへのパスを適切に設定してください
+        router.push(`/shops/${shopId}`);
     };
 
-  return (
-      <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.layout}>
+    return (
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <p className={styles.title}>店舗情報を修正する</p>
+            <div className={styles.layout}>
                 <Input
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    label={"店名"}
+                    label="店名"
                     placeholder="店名を入力してください"
                     isClearable
                     radius="sm"
@@ -156,7 +180,6 @@ const ShopCreateForm: React.FC = () => {
                         input: styles.inputInner,
                         inputWrapper: styles.inputWrapper
                     }}
-                    errorMessage="店名を入力してください"
                 />
 
                 <CustomSelect
@@ -164,7 +187,7 @@ const ShopCreateForm: React.FC = () => {
                     label="店舗タイプ"
                     options={types}
                     value={formData.types}
-                    onChange={(values) => setFormData(prev => ({ ...prev, types: values }))}
+                    onChange={(values) => setFormData(prev => ({...prev, types: values}))}
                 />
 
                 <CustomSelect
@@ -172,7 +195,7 @@ const ShopCreateForm: React.FC = () => {
                     label="店舗コンセプト"
                     options={concepts}
                     value={formData.concepts}
-                    onChange={(values) => setFormData(prev => ({ ...prev, concepts: values }))}
+                    onChange={(values) => setFormData(prev => ({...prev, concepts: values}))}
                 />
 
                 <CustomSelect
@@ -180,21 +203,31 @@ const ShopCreateForm: React.FC = () => {
                     label="店舗レイアウト"
                     options={layouts}
                     value={formData.layouts}
-                    onChange={(values) => setFormData(prev => ({ ...prev, layouts: values }))}
+                    onChange={(values) => setFormData(prev => ({...prev, layouts: values}))}
                 />
 
-                <Input
-                    type="file"
-                    onChange={handleFileChange}
-                    label="アイコン画像"
-                    accept="image/*"
-                    className={styles.inputs}
-                    radius="sm"
-                    classNames={{
-                        input: styles.inputInner,
-                        inputWrapper: styles.inputWrapper
-                    }}
-                />
+                <div className={styles.iconImageContainer}>
+                    {iconImageUrl && (
+                        <Image
+                            src={iconImageUrl}
+                            alt="Shop Icon"
+                            width={100}
+                            height={100}
+                        />
+                    )}
+                    <Input
+                        type="file"
+                        onChange={handleFileChange}
+                        label="アイコン画像"
+                        accept="image/*"
+                        className={styles.inputs}
+                        radius="sm"
+                        classNames={{
+                            input: styles.inputInner,
+                            inputWrapper: styles.inputWrapper
+                        }}
+                    />
+                </div>
 
                 <Input
                     name="address.postal_code"
@@ -217,8 +250,13 @@ const ShopCreateForm: React.FC = () => {
                     name="address.prefecture"
                     label="都道府県"
                     placeholder="都道府県を選択してください"
-                    value={formData.address.prefecture}
-                    onChange={(e) => handleChange({ target: { name: 'address.prefecture', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+                    selectedKeys={formData.address.prefecture ? [formData.address.prefecture] : []}
+                    onChange={(e) => handleChange({
+                        target: {
+                            name: 'address.prefecture',
+                            value: e.target.value
+                        }
+                    } as React.ChangeEvent<HTMLInputElement>)}
                     className={styles.inputs}
                     classNames={{
                         base: styles.select,
@@ -288,7 +326,7 @@ const ShopCreateForm: React.FC = () => {
 
                 <Input
                     name="phone_number"
-                    type={"tel"}
+                    type="tel"
                     value={formData.phone_number || ''}
                     onChange={handleChange}
                     label="電話番号"
@@ -300,47 +338,46 @@ const ShopCreateForm: React.FC = () => {
                         input: styles.inputInner,
                         inputWrapper: styles.inputWrapper
                     }}
-                    errorMessage={formData.phone_number && formData.phone_number.length < 10 ? "有効な電話番号を入力してください" : undefined}
                 />
 
                 <div className={styles.coordinates}>
-                <Input
-                    name="latitude"
-                    value={formData.latitude !== null ? formData.latitude.toString() : ''}
-                    onChange={handleChange}
-                    label={"緯度"}
-                    placeholder="XX.XXXXXX"
-                    isClearable
-                    radius="sm"
-                    labelPlacement="outside"
-                    className={styles.coordinate}
-                    classNames={{
-                        input: styles.inputInner,
-                        inputWrapper: styles.inputWrapper
-                    }}
-                />
-                <Input
-                    name="longitude"
-                    value={formData.longitude !== null ? formData.longitude.toString() : ''}
-                    onChange={handleChange}
-                    label={"経度"}
-                    placeholder="XX.XXXXXX"
-                    isClearable
-                    radius="sm"
-                    labelPlacement="outside"
-                    className={styles.coordinate}
-                    classNames={{
-                        input: styles.inputInner,
-                        inputWrapper: styles.inputWrapper
-                    }}
-                />
+                    <Input
+                        name="latitude"
+                        value={formData.latitude !== null ? formData.latitude.toString() : ''}
+                        onChange={handleChange}
+                        label="緯度"
+                        placeholder="XX.XXXXXX"
+                        isClearable
+                        radius="sm"
+                        labelPlacement="outside"
+                        className={styles.coordinate}
+                        classNames={{
+                            input: styles.inputInner,
+                            inputWrapper: styles.inputWrapper
+                        }}
+                    />
+                    <Input
+                        name="longitude"
+                        value={formData.longitude !== null ? formData.longitude.toString() : ''}
+                        onChange={handleChange}
+                        label="経度"
+                        placeholder="XX.XXXXXX"
+                        isClearable
+                        radius="sm"
+                        labelPlacement="outside"
+                        className={styles.coordinate}
+                        classNames={{
+                            input: styles.inputInner,
+                            inputWrapper: styles.inputWrapper
+                        }}
+                    />
                 </div>
 
                 <Input
                     name="seat_count"
                     value={formData.seat_count.toString()}
                     onChange={handleChange}
-                    label={"席数"}
+                    label="席数"
                     type="number"
                     radius="sm"
                     labelPlacement="outside"
@@ -368,25 +405,33 @@ const ShopCreateForm: React.FC = () => {
 
                 <div className={styles.openHours}>
                     <OpeningHoursInput
-                        value={formData.opening_hours || { 月: { open: '', close: '', isOpen: false }, 火: { open: '', close: '', isOpen: false }, 水: { open: '', close: '', isOpen: false }, 木: { open: '', close: '', isOpen: false }, 金: { open: '', close: '', isOpen: false }, 土: { open: '', close: '', isOpen: false }, 日: { open: '', close: '', isOpen: false } }}
-                        onChange={(newOpeningHours) => setFormData(prev => ({ ...prev, opening_hours: newOpeningHours }))}
+                        value={formData.opening_hours || {
+                            月: {open: '', close: '', isOpen: false},
+                            火: {open: '', close: '', isOpen: false},
+                            水: {open: '', close: '', isOpen: false},
+                            木: {open: '', close: '', isOpen: false},
+                            金: {open: '', close: '', isOpen: false},
+                            土: {open: '', close: '', isOpen: false},
+                            日: {open: '', close: '', isOpen: false}
+                        }}
+                        onChange={(newOpeningHours) => setFormData(prev => ({...prev, opening_hours: newOpeningHours}))}
                     />
                 </div>
-              <footer className={styles.footer}>
-                  <div className={styles.footerLeft}>
-                      <Button isIconOnly onClick={handleBack} className={styles.backButton}>
-                          <ChevronLeft/>
-                      </Button>
-                  </div>
-                  <div className={styles.footerRight}>
-                      <Button type="submit" className={styles.button}>
-                          Create Shop
-                      </Button>
-                  </div>
-              </footer>
-          </div>
-      </form>
-  );
+            </div>
+            <footer className={styles.footer}>
+                <div className={styles.footerLeft}>
+                    <Button isIconOnly onClick={handleBack} className={styles.backButton}>
+                        <ChevronLeft/>
+                    </Button>
+                </div>
+                <div className={styles.footerRight}>
+                    <Button type="submit" className={styles.button}>
+                        Update Shop
+                    </Button>
+                </div>
+            </footer>
+        </form>
+    );
 };
 
-export default ShopCreateForm;
+export default ShopUpdateForm;

@@ -1,20 +1,4 @@
 .modalBase {
-  --modal-background: rgb(0, 0, 0) !important;
-  --modal-color: rgb(255, 255, 255) !important;
-
-  @media (min-width: 768px) {
-    --modal-width: 60% !important;
-    --modal-height: 100% !important;
-  }
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.modalBase {
-  background-color: rgb(7, 14, 54);
   padding: 20px 0;
 }
 
