@@ -27,7 +27,7 @@ export const createReview = async (shopId: number, reviewData: ReviewData) => {
     }
 
     try {
-        const response = await axios.post(`${API_URL}/api/shops/reviews/`, formData, {
+        const response = await axios.post(`${API_URL}/shops/reviews/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${session.accessToken}`,
@@ -47,7 +47,7 @@ export const getReviews = async (shopId: number) => {
             throw new Error('認証されていません。ログインしてください。');
         }
 
-        const response = await axios.get(`${API_URL}/api/shops/reviews/?shop_id=${shopId}`, {
+        const response = await axios.get(`${API_URL}/shops/reviews/?shop_id=${shopId}`, {
             headers: {
                 'Authorization': `Bearer ${session.accessToken}`,
             },
