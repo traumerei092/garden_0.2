@@ -37,7 +37,7 @@ const CreateShop: React.FC<CreateShopProps> = ({ show }) => {
                 </Button>
             </div>
 
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <Modal isOpen={isModalOpen} onClose={closeModal} placement={"center"}>
                 <ModalContent>
                     <ModalHeader>ログインが必要です</ModalHeader>
                     <ModalBody>
