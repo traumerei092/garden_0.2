@@ -21,21 +21,25 @@ const MapComponent: React.FC = () => {
 
             loader.load().then(() => {
                 const mapElement = document.getElementById("map") as HTMLElement;
-                const newMap = new google.maps.Map(mapElement, {
-                    center: {lat, lng},
-                    zoom: 14,
-                });
+                // mapElementがnullでないことを確認
+                if (mapElement) {
+                    const newMap = new google.maps.Map(mapElement as HTMLElement, {
+                        center: { lat, lng },
+                        zoom: 14,
+                    });
+                    setMap(newMap);
 
-                setMap(newMap);
+                    // ユーザーの位置にマーカーを追加
+                    new google.maps.Marker({
+                        position: { lat, lng },
+                        map: newMap,
+                        title: "Your Location"
+                    });
 
-                // ユーザーの位置にマーカーを追加
-                new google.maps.Marker({
-                    position: {lat, lng},
-                    map: newMap,
-                    title: "Your Location"
-                });
-
-                setIsParamsReady(true);  // 準備完了のフラグを設定
+                    setIsParamsReady(true);  // 準備完了のフラグを設定
+                } else {
+                    console.error("Map element not found.");
+                }
             });
         }
     }, [searchParams]);

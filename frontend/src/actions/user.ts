@@ -34,7 +34,7 @@ export const temporarySignup = async (input: SignUpInput) => {
     console.log('Sending signup request with data:', body);
 
     // APIにPOSTリクエストを送信
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/users/`, {
+    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/users/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export const temporarySignup = async (input: SignUpInput) => {
 export const resendActivationEmail = async (email: string) => {
   try {
     // APIにPOSTリクエストを送信
-    const apiRes = await fetch(`${process.env.API_URL}/api/auth/users/resend_activation/`, {
+    const apiRes = await fetch(`${process.env.API_URL}/auth/users/resend_activation/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export const resendActivationEmail = async (email: string) => {
 export const completeSignup = async ({ uid, token }: { uid: string; token: string }) => {
   try {
     console.log('Sending activation request with data:', { uid, token });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/users/activation/`, {
+    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/users/activation/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
