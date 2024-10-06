@@ -57,24 +57,24 @@
 }
 
 .typeChip {
-  background: rgba(235, 14, 242, 0.4);
-  border: 0.5px solid rgba(235, 14, 242, 1);
-  color: white;
-  height: 1.5rem;
+  background: rgba(235, 14, 242, 0.4) !important;
+  border: 0.5px solid rgba(235, 14, 242, 1) !important;
+  color: white !important;
+  height: 1.5rem !important;
 }
 
 .conceptChip {
-  background: rgba(0, 198, 255, 0.4);
-  border: 0.5px solid rgba(0, 198, 255, 1);
-  color: white;
-  height: 1.5rem;
+  background: rgba(0, 198, 255, 0.4) !important;
+  border: 0.5px solid rgba(0, 198, 255, 1) !important;
+  color: white !important;
+  height: 1.5rem !important;
 }
 
 .layoutChip {
-  background: rgba(255, 174, 0, 0.4);
-  border: 0.5px solid rgba(255, 174, 0, 1);
-  color: white;
-  height: 1.5rem;
+  background: rgba(255, 174, 0, 0.4) !important;
+  border: 0.5px solid rgba(255, 174, 0, 1) !important;
+  color: white !important;
+  height: 1.5rem !important;
 }
 
 .updateShop {
@@ -82,14 +82,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 110px;
 }
 
 .updateButton {
-  background: none;
-  border: none;
-  color: white;
-  text-decoration: underline;
-  font-size: 14px;
+  background: none !important;
+  border: none !important;
+  color: white !important;
+  text-decoration: underline !important;
+  font-size: 14px !important;
   cursor: pointer;
   padding: 10px 0;
 }
