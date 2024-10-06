@@ -30,16 +30,16 @@
 
 .outerButton {
   background: rgba(7, 14, 54, 1) !important;
-  border: 1px solid #00c6ff;
+  border: 1px solid #00c6ff !important;
   padding: 1px;
   border-radius: 5px;
   width: 80%;
 }
 
 .innerButton {
-  background: rgba(0, 198, 255, 0.15);
-  border-radius: 5px;
-  color: white;
+  background: rgba(0, 198, 255, 0.15) !important;
+  border-radius: 5px !important;
+  color: white !important;
   font-size: 14px;
   width: 100%;
 }

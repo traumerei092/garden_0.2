@@ -1,47 +1,47 @@
 .shopButton {
-  height: 220px;
-  padding: 0;
+  height: 220px !important;
+  padding: 0 !important;
   background: transparent !important;
-  box-shadow: 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px rgba(255, 255, 255, 0.2) !important;
 }
 
 .shopCard {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
+  position: relative !important;
+  overflow: hidden !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .cardBody {
-  padding: 0;
-  height: 100%;
-  width: 100%;
+  padding: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .shopImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 1 !important;
 }
 
 .imageOverlay {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(7, 14, 54, 0.3);
+  background: rgba(7, 14, 54, 0.3) !important;
   z-index: 2;
 }
 
 .overlay {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8)) !important;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -122,33 +122,33 @@
 }
 
 .typeChip {
-  background: rgba(235, 14, 242, 0.4);
-  border: 0.5px solid rgba(235, 14, 242, 1);
-  color: white;
+  background: rgba(235, 14, 242, 0.4) !important;
+  border: 0.5px solid rgba(235, 14, 242, 1) !important;
+  color: white !important;
   height: 1.5rem;
   font-size: 0.8rem;
 }
 
 .conceptChip {
-  background: rgba(0, 198, 255, 0.4);
-  border: 0.5px solid rgba(0, 198, 255, 1);
-  color: white;
+  background: rgba(0, 198, 255, 0.4) !important;
+  border: 0.5px solid rgba(0, 198, 255, 1) !important;
+  color: white !important;
   height: 1.5rem;
   margin-right: 5px;
   font-size: 0.8rem;
 }
 
 .layoutChip {
-  background: rgba(255, 174, 0, 0.4);
-  border: 0.5px solid rgba(255, 174, 0, 1);
-  color: white;
+  background: rgba(255, 174, 0, 0.4) !important;
+  border: 0.5px solid rgba(255, 174, 0, 1) !important;
+  color: white !important;
   height: 1.5rem;
   margin-right: 5px;
   font-size: 0.8rem;
 }
 
 .addressBreadcrumbs {
-  font-size: 0.8rem;
+  font-size: 0.8rem !important;
 }
 
 .concept {
