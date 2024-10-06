@@ -39,11 +39,11 @@
 }
 
 .updateButton {
-  background: none;
-  border: none;
-  color: white;
-  text-decoration: underline;
-  font-size: 14px;
+  background: none !important;
+  border: none !important;
+  color: white !important;
+  text-decoration: underline !important;
+  font-size: 14px !important;
   cursor: pointer;
   padding: 10px 0;
 }
