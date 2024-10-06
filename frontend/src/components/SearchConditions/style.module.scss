@@ -27,7 +27,7 @@
   padding: 8px 12px;
 
   p {
-    font-size: 14px;
+    font-size: 14px !important;
     margin: 0;
   }
 }
@@ -117,11 +117,11 @@
 
 .searchButton {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 5px !important;
   background: linear-gradient(to right, #00c6ff, #eb0ef2) !important;
-  color: rgba(255, 255, 255, 1);
-  font-size: 16px;
-  font-weight: bold;
+  color: rgba(255, 255, 255, 1) !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
 
 .selectedArea {
