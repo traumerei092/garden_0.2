@@ -5,7 +5,7 @@
   z-index: 1000;
   background: linear-gradient(to right, #00c6ff, #eb0ef2) !important;
   padding: 1px;
-  border-radius: 10px;
+  border-radius: 10px !important;
   transition: transform 0.3s ease-in-out;
   transform: translateY(100px);
 }
@@ -27,7 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 10px !important;
 
   p {
     color: white;
