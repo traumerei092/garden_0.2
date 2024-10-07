@@ -64,6 +64,7 @@ class ShopSerializer(serializers.ModelSerializer):
         return shop
 
     def update(self, instance, validated_data):
+        print("Validated data in update method:", validated_data)
         address_data = validated_data.pop('address', None)
         types_data = validated_data.pop('types', None)
         concepts_data = validated_data.pop('concepts', None)

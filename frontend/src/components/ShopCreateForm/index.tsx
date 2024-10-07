@@ -116,11 +116,12 @@ const ShopCreateForm: React.FC = () => {
           try {
             const shopDataToSubmit: ShopFormData = {
               ...formData,
-              types: formData.types.map(Number),
-              concepts: formData.concepts.map(Number),
-              layouts: formData.layouts.map(Number),
+              types: formData.types,
+              concepts: formData.concepts,
+              layouts: formData.layouts,
               icon_image: iconImage || undefined,
             };
+            console.log('Submitting shop data:', shopDataToSubmit);
             const newShop = await createShop(shopDataToSubmit);
             console.log('New shop created:', newShop);
             router.push('/shops');

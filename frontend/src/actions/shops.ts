@@ -80,7 +80,7 @@ export const createShop = async (shopData: ShopFormData): Promise<Shop> => {
       } else if (key === 'opening_hours') {
         formData.append(key, JSON.stringify(value));
       } else if (Array.isArray(value)) {
-        value.forEach(item => formData.append(`${key}`, item.toString()));
+        value.forEach(item => formData.append(`${key}[]`, item.toString()));
       } else if (value !== null && value !== undefined) {
         formData.append(key, value.toString());
       }
@@ -186,7 +186,7 @@ export const updateShop = async (id: number, shopData: ShopFormData): Promise<Sh
       } else if (key === 'opening_hours') {
         formData.append(key, JSON.stringify(value));
       } else if (Array.isArray(value)) {
-        value.forEach(item => formData.append(`${key}`, item.toString()));
+        value.forEach(item => formData.append(`${key}[]`, item.toString()));
       } else if (value !== null && value !== undefined) {
         formData.append(key, value.toString());
       }

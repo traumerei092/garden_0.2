@@ -146,7 +146,15 @@ const ShopUpdateForm: React.FC<{ shopId: number }> = ({ shopId }) => {
         e.preventDefault();
         if (status === 'authenticated') {
             try {
-                const updatedShop = await updateShop(shopId, formData);
+                const shopDataToSubmit: ShopFormData = {
+                    ...formData,
+                    types: formData.types,
+                    concepts: formData.concepts,
+                    layouts: formData.layouts,
+                    icon_image: formData.icon_image instanceof File ? formData.icon_image : undefined,
+                };
+                console.log('Submitting updated shop data:', shopDataToSubmit);
+                const updatedShop = await updateShop(shopId, shopDataToSubmit);
                 console.log('Shop updated:', updatedShop);
                 router.push(`/shops/${shopId}`);
             } catch (error) {
