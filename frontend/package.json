@@ -12,6 +12,7 @@
     "@googlemaps/js-api-loader": "^1.16.8",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.6",
+    "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.7",
     "framer-motion": "^11.3.31",
     "lucide-react": "^0.445.0",
@@ -22,7 +23,9 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
+    "react-slick": "^0.30.2",
     "sass": "^1.77.8",
+    "slick-carousel": "^1.8.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -30,6 +33,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",

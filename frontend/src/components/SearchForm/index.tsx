@@ -70,7 +70,7 @@ const SearchForm = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.message}>
-                <p>「行きつけのBar」が見つかる</p>
+                <p>「行きつけのBar・スナック」が見つかる</p>
             </div>
             <div className={styles.logo}>
                 <Image src={gardenLogo} alt="Garden Logo" />

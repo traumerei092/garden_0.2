@@ -1,0 +1,138 @@
+.mapContainer {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.topButtons {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  margin-top: 40px;
+}
+
+.topButton {
+  background-color: rgba(7, 14, 54, 0.9) !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: unset !important;
+  padding: 0 !important;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.searchContainer {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.searchInputBase {
+  width: 100%;
+  color: white !important;
+}
+
+.searchInputMainWrapper {
+  background-color: rgba(7, 14, 54, 0.9) !important;
+  border-radius: 10px;
+}
+
+.searchInputInner {
+  background-color: transparent !important;
+  color: white !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+.searchInputWrapper {
+  background-color: transparent !important;
+}
+
+.conceptButton {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: rgba(7, 14, 54, 0.9) !important;
+  border: none;
+  color: white !important;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 40px;
+}
+
+.mapStyle {
+  height: 100%;
+  width: 100%;
+}
+
+.bottomContainer {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+}
+
+.currentLocationButton {
+  background-color: rgba(7, 14, 54, 0.9) !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 20px;
+  padding: 8px 16px !important;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  margin-left: 20px;
+}
+
+.shopCardContainer {
+  width: 100%;
+}
+
+.shopCardWrapper {
+  padding: 0 10px;
+}
+
+// グローバルスタイル
+.slickSlideWrapper {
+  :global {
+    .slick-slide {
+      padding: 0 5px;
+    }
+
+    .slick-track {
+      display: flex;
+      align-items: center;
+    }
+
+    .slick-slide {
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .slick-center {
+      opacity: 1;
+    }
+  }
+}
