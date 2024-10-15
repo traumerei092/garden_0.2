@@ -1,11 +1,5 @@
-// app/map/page.tsx
-import dynamic from 'next/dynamic';
-
-const DynamicMap = dynamic(() => import('@/components/Map'), {
-  loading: () => <p>Loading map...</p>,
-  ssr: false
-});
+import Map from '@/components/Map';
 
 export default function MapPage() {
-  return <DynamicMap />;
+  return <Map />;
 }
