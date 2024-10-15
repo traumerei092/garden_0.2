@@ -13,10 +13,7 @@ import styles from './style.module.scss';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import dynamic from 'next/dynamic';
 import {useRouter} from "next/navigation";
-
-const DynamicSlider = dynamic(() => import('react-slick'), { ssr: false });
 
 // LatLngLiteral の型定義
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -166,13 +163,13 @@ const Map: React.FC = () => {
               </Button>
 
               <div className={`${styles.shopCardContainer} ${styles.slickSlideWrapper}`}>
-                  <DynamicSlider {...sliderSettings}>
+                  <Slider {...sliderSettings}>
                       {shops.map((shop) => (
                           <div key={shop.id}>
                               <ShopCard shop={shop}/>
                           </div>
                       ))}
-                  </DynamicSlider>
+                  </Slider>
               </div>
           </div>
       </div>
