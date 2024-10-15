@@ -18,9 +18,7 @@ const HeaderController: React.FC = () => {
   // マップページで緯度経度パラメータがある場合もヘッダーを非表示にする
   const isMapWithParams = pathname === '/map' && searchParams && (searchParams.has('lat') || searchParams.has('lng'))
 
-  const showHeader = !hiddenPaths.includes(pathname || '') &&
-                     !shopDetailPattern.test(pathname || '') &&
-                     !isMapWithParams
+  const showHeader = !hiddenPaths.includes(pathname || '') && !shopDetailPattern.test(pathname || '') && !isMapWithParams
 
   if (!showHeader) return null
 
