@@ -15,10 +15,7 @@ const HeaderController: React.FC = () => {
   // 店舗詳細ページのパターン
   const shopDetailPattern = /^\/shops\/\d+$/
 
-  // マップページで緯度経度パラメータがある場合もヘッダーを非表示にする
-  const isMapWithParams = pathname === '/map' && searchParams && (searchParams.has('lat') || searchParams.has('lng'))
-
-  const showHeader = !hiddenPaths.includes(pathname || '') && !shopDetailPattern.test(pathname || '') && !isMapWithParams
+  const showHeader = !hiddenPaths.includes(pathname || '') && !shopDetailPattern.test(pathname || '')
 
   if (!showHeader) return null
 
