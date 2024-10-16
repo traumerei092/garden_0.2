@@ -113,7 +113,7 @@ function ShopsContent() {
     }, [searchParams]);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <>
             <SearchConditions />
             <DividerLine />
             <ShopNav shopCount={shops.length} />
@@ -129,7 +129,7 @@ function ShopsContent() {
                     </linearGradient>
                 </defs>
             </svg>
-        </Suspense>
+        </>
     )
 }
 
