@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import {Shop, ShopFormData, ShopType, ShopConcept, ShopLayout, ShopPhoto, Address} from '../types/shop';
 import { getSession } from "next-auth/react";
+import { getCoordinatesFromAddress } from './geocoding';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -138,7 +139,21 @@ export const getShops = async (
         if (city) params.append('city', city);
 
         const response = await axios.get(`${API_URL}/shops/shops/`, { params });
-        return response.data;
+        const shops: Shop[] = response.data;
+
+        // 緯度経度情報の補完
+        const shopsWithCoordinates = await Promise.all(shops.map(async (shop) => {
+            if (!shop.latitude || !shop.longitude) {
+                const fullAddress = `${shop.address.prefecture}${shop.address.city}${shop.address.town}${shop.address.street_address}`;
+                const coordinates = await getCoordinatesFromAddress(fullAddress);
+                if (coordinates) {
+                    return { ...shop, latitude: coordinates.lat, longitude: coordinates.lng };
+                }
+            }
+            return shop;
+        }));
+
+        return shopsWithCoordinates;
     } catch (error) {
         console.error('Error fetching shops:', error);
         throw error;

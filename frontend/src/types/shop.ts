@@ -1,3 +1,5 @@
+import type { GeocodingResult } from '@/actions/geocoding';
+
 export interface Address {
   postal_code: string;
   prefecture: string;
@@ -31,6 +33,7 @@ export interface Shop {
       close: string;
     };
   };
+  coordinates?: GeocodingResult;
 }
 
 export interface ShopType {
